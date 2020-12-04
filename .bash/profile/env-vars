@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Locale (UTF-8 not available).
+
+export LANG=en_US.UTF-8;
+export LC_ALL=en_US.UTF-8;
+
+# CD path for quick jumps.
+
+export CDPATH=.\
+:~\
+:~/documents\
+:~/downloads\
+:~/tmp;
+
+# Default text editor.
+
+export EDITOR=/usr/bin/vim;

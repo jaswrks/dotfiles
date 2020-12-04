@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# CP utils.
+
+function cp() {
+  :: cp --interactive "${@}";
+};

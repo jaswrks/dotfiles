@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+# Aliases are deprecated in favor of shell functions.
+# See: `/funcs` for improved aliases.

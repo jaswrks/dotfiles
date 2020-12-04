@@ -1,0 +1,2 @@
+# Don't display MOTD in shells.
+# shellcheck disable=SC2148

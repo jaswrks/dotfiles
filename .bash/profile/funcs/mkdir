@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Mkdir w/ parents.
+
+function mkdir() {
+  :: mkdir --parents "${@}";
+};

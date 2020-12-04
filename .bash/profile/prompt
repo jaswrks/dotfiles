@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Shell prompt <http://ezprompt.net/>.
+
+export PS1="\[\e[32m\]\h\[\e[m\] \[\e[34m\][\[\e[m\]\[\e[33m\]\w\[\e[m\]\[\e[34m\]]\[\e[m\] \\$ ";

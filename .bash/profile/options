@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Glob options.
+
+shopt -s extglob;
+shopt -s dotglob;
+shopt -s globstar;
+
+# Window options.
+
+shopt -s checkwinsize;
+
+# History options.
+
+HISTSIZE=1000;
+HISTFILESIZE=2000;
+HISTCONTROL=ignoreboth;
+shopt -s histappend;
+
+bind '"\e[A": history-search-backward';
+bind '"\eOA": history-search-backward';
+
+# Enable completion.
+# shellcheck disable=SC1091
+
+. /etc/bash_completion;

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Grep utils.
+
+function grep() {
+  :: grep --perl-regexp --color=auto "${@}";
+};

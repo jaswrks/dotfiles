@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Directory stack.
+
+function dirs() {
+  if [[ -n "${1}" ]]; then
+    :: dirs "${@}";
+  else
+    :: dirs -v;
+  fi;
+};

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Change directory.
+
+function cd() {
+  :: cd "${@}" && ls;
+};
+function up() { cd ../ || return 1; };
+function back() { cd - || return 1; };
+function home() { cd ~/ || return 1; };

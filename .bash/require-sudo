@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2016
+
+# Running as sudo user?
+
+if [[ "$(logname)" == 'root' ]]; then
+  echo 'Please run w/ `sudo`.';
+  exit 1;
+fi;

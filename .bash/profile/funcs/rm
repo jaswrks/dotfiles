@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# RM utils.
+
+function rm() {
+  :: rm --interactive "${@}";
+};

@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Diff utils.
+
+function diff() {
+  colordiff --unified=10 "${@}" | less --RAW-CONTROL-CHARS --chop-long-lines;
+};

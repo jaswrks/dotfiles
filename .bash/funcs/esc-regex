@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Escape regex.
+
+function esc-regex() {
+  echo "${1:-}" | perl -0wpe 's/([.\\+*?[\^\]$(){}=!<>|:\-])/\\$1/ug';
+};

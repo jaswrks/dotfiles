@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# Include strict mode & functions.
+
+. ~/.bash/strict-mode;
+. ~/.bash/functions;

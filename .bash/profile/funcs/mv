@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# MV utils.
+
+function mv() {
+  :: mv --interactive "${@}";
+};

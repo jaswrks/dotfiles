@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Default umask.
+
+umask 0022; # 755 & 644.

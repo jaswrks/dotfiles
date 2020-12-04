@@ -1,0 +1,3 @@
+--follow
+--type-set=all:match:/.*/
+--type-set=conf:ext:conf

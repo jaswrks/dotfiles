@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Function includes.
+
+for _file in ~/.bash/funcs/**; do
+  [[ -f "${_file}" ]] && . "${_file}";
+done; unset _file;
