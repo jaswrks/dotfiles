@@ -3,9 +3,5 @@
 # Directory listing.
 
 function ls() {
-  :: ls --all --group-directories-first --classify --literal --color=auto "${@}";
-};
-
-function ll() {
   :: ls --all --group-directories-first --classify --literal --color=auto -l "${@}";
 };
