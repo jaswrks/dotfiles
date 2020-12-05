@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# See: `~/.bin/git` for others.
+
+function g() {
+  :: git "${@}";
+};
+function gs() { git status "${@}"; };
+function gco() { git checkout "${@}"; };
+
+function ga() { git add "${@}"; };
+function gaa() { git add --all "${@}"; };
+function gc() { git commit "${@}"; };
+function gp() { git push "${@}"; };
+
+function gd() { git diff "${@}"; };
