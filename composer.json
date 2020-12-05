@@ -1,13 +1,13 @@
 {
 	"type": "library",
 	"license": "GPL-3.0+",
-	"name": "jaswrks/dotfiles-pub",
-	"homepage": "https://github.com/jaswrks/dotfiles-pub",
+	"name": "jaswrks/dotfiles",
+	"homepage": "https://github.com/jaswrks/dotfiles",
 	"support": {
-		"source": "https://github.com/jaswrks/dotfiles-pub",
-		"issues": "https://github.com/jaswrks/dotfiles-pub/issues"
+		"source": "https://github.com/jaswrks/dotfiles",
+		"issues": "https://github.com/jaswrks/dotfiles/issues"
 	},
-	"description": "Jason's dotfiles (pub).",
+	"description": "Jason's Dotfiles.",
 	"keywords": [
 		"jaswrks",
 		"dotfiles"
