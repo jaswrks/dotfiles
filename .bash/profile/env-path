@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+# Save & reset ${PATH}.
+
 export DEFAULT_PATH="${PATH}";
-export PATH='';
+export PATH=''; # Initialize.
+
+# Reconfiguration.
 
 PATH="${PATH}":~/.bin;
 PATH="${PATH}":~/.bin/git;
@@ -11,3 +15,116 @@ PATH="${PATH}":/usr/sbin;
 PATH="${PATH}":/usr/bin;
 PATH="${PATH}":/sbin;
 PATH="${PATH}":/bin;
+
+# MacOS-specifics.
+
+if [[ "${OSTYPE}" == "darwin"* ]]; then
+	export PATH=''; # Initialize.
+	export MANPATH=''; # Initialize.
+	export NODE_PATH=''; # Initialize.
+	eval "$(/usr/libexec/path_helper -s)";
+
+	# Initialize.
+
+	PRE_PATH='';
+	PRE_MANPATH='';
+	PRE_NODE_PATH='';
+
+	# Add me.
+
+	PRE_PATH="${PRE_PATH}"~/.bin:;
+	PRE_PATH="${PRE_PATH}"~/.bin/git:;
+
+	# Add local paths.
+
+	PRE_PATH="${PRE_PATH}"/usr/local/sbin:;
+	PRE_PATH="${PRE_PATH}"/usr/local/bin:;
+	PRE_MANPATH="${PRE_MANPATH}"/usr/local/share/man:;
+
+	# Add node paths.
+
+	PRE_PATH="${PRE_PATH}"~/.node/bin:;
+	PRE_MANPATH="${PRE_MANPATH}"~/.node/share/man:;
+
+	# Add composer paths.
+
+	PRE_PATH="${PRE_PATH}"~/.composer/vendor/bin:;
+	PRE_MANPATH="${PRE_MANPATH}"~/.composer/vendor/share/man:;
+
+	# Add core utility paths.
+
+	brew_prefix_coreutils=/usr/local/opt/coreutils;
+	PRE_PATH="${PRE_PATH}${brew_prefix_coreutils}"/libexec/gnubin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_coreutils}"/libexec/gnuman:;
+
+	# Add diff utility paths.
+
+	brew_prefix_diffutils=/usr/local/opt/diffutils;
+	PRE_PATH="${PRE_PATH}${brew_prefix_diffutils}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_diffutils}"/share/man:;
+
+	# Add getopt utility paths.
+
+	brew_prefix_getopt=/usr/local/opt/gnu-getopt;
+	PRE_PATH="${PRE_PATH}${brew_prefix_getopt}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_getopt}"/share/man:;
+
+	# Add unzip utility paths.
+
+	brew_prefix_unzip=/usr/local/opt/unzip;
+	PRE_PATH="${PRE_PATH}${brew_prefix_unzip}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_unzip}"/share/man:;
+
+	# Add curl utility paths.
+
+	brew_prefix_curl=/usr/local/opt/curl;
+	PRE_PATH="${PRE_PATH}${brew_prefix_curl}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_curl}"/share/man:;
+
+	# Add PHP utility paths.
+
+	brew_prefix_php=/usr/local/opt/php@7.2;
+	PRE_PATH="${PRE_PATH}${brew_prefix_php}"/bin:;
+	PRE_PATH="${PRE_PATH}${brew_prefix_php}"/sbin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_php}"/share/man:;
+
+	# Add python utility paths.
+
+	brew_prefix_python=/usr/local/opt/python@2;
+	PRE_PATH="${PRE_PATH}${brew_prefix_python}"/libexec/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_python}"/share/man:;
+
+	# Add ruby utility paths.
+
+	brew_prefix_ruby=/usr/local/opt/ruby;
+	PRE_PATH="${PRE_PATH}${brew_prefix_ruby}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_python}"/share/man:;
+
+	# Add openssl utility paths.
+
+	brew_prefix_openssl=/usr/local/opt/openssl;
+	PRE_PATH="${PRE_PATH}${brew_prefix_openssl}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_openssl}"/share/man:;
+
+	# Add gettext utility paths.
+
+	brew_prefix_gettext=/usr/local/opt/gettext;
+	PRE_PATH="${PRE_PATH}${brew_prefix_gettext}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_gettext}"/share/man:;
+
+	# Add file-formula utility paths.
+
+	brew_prefix_file_formula=/usr/local/opt/file-formula;
+	PRE_PATH="${PRE_PATH}${brew_prefix_file_formula}"/bin:;
+	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_file_formula}"/share/man:;
+
+	# Prependages.
+
+	PATH="${PRE_PATH}${PATH}";
+	MANPATH="${PRE_MANPATH}${MANPATH}";
+
+	# Set Node path also.
+
+	PRE_NODE_PATH=/usr/local/lib/node_modules;
+	NODE_PATH="${PRE_NODE_PATH}${NODE_PATH}";
+fi;
