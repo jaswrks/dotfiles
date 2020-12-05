@@ -10,7 +10,7 @@
 
 # Collect arguments.
 
-message=''; main-dev='';
+message=''; main_dev='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
@@ -23,7 +23,7 @@ while [[ $# -gt 0 ]]; do
       shift;
       ;;
     --main-dev|--dev-main)
-      main-dev=true
+      main_dev=true
       shift;
       ;;
     *)
@@ -41,7 +41,7 @@ fi;
 
 git add --all && git commit -m "${message}" && git push;
 
-if [[ -n "${main-dev}" ]]; then
+if [[ -n "${main_dev}" ]]; then
 	start_branch="$(git-current-branch)";
 
 	if [[ 'main' == "${start_branch}" ]]; then
