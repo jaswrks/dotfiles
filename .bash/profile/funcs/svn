@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# SVN aliases.
+
+function s() {
+  :: svn "${@}";
+};
+function ss() { svn status --ignore-externals "${@}"; };
+function sco() { svn checkout "${@}"; };
+
+function sa() { svn add "${@}"; };
+function sc() { svn commit "${@}"; };
+
+function sd() { svn diff "${@}"; };
