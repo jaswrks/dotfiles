@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Default permissions recursively.
+
+find ./ -type d -exec chmod 755 {} \;
+find ./ -type f -exec chmod 644 {} \;

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2016
+
+# Require a clean git repo.
+
+if git-repo-is-dirty; then
+  echo 'Git repo is dirty. Run `git status` for details.';
+  exit 1;
+fi;

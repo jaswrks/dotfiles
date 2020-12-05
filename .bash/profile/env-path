@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+export DEFAULT_PATH="${PATH}";
 export PATH='';
 
 PATH="${PATH}":~/.bin;
+PATH="${PATH}":~/.bin/git;
 PATH="${PATH}":/usr/local/sbin;
 PATH="${PATH}":/usr/local/bin;
 PATH="${PATH}":/usr/sbin;

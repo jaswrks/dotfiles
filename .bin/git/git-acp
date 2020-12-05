@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Git repo requirements.
+
+. ~/.bash/require-git-repo;
+
+# Collect arguments.
+
+message=''; main-dev='';
+
+while [[ $# -gt 0 ]]; do
+  case "${1}" in
+    -m)
+      message="${2:-}"
+      shift 2 || shift;
+      ;;
+    --message=*)
+      message="${1#*=}"
+      shift;
+      ;;
+    --main-dev|--dev-main)
+      main-dev=true
+      shift;
+      ;;
+    *)
+      echo 'Invalid arguments.'; exit 1;
+  esac;
+done;
+
+# Validate arguments.
+
+if [[ -z "${message:-}" ]]; then
+  echo 'One of -m or --message is required.'; exit 1;
+fi;
+
+# Run commands.
+
+git add --all && git commit -m "${message}" && git push;
+
+if [[ -n "${main-dev}" ]]; then
+	start_branch="$(git-current-branch)";
+
+	if [[ 'main' == "${start_branch}" ]]; then
+		other_branch='dev';
+
+	elif [[ 'dev' == "${start_branch}" ]]; then
+		other_branch='main';
+
+	else other_branch=''; fi;
+
+	if [[ -n "${other_branch}" ]]; then
+		git checkout "${other_branch}" && git merge "${start_branch}" && git push;
+		git checkout "${start_branch}";
+	fi;
+fi;

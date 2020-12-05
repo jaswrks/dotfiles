@@ -1,0 +1,28 @@
+{
+	"plugins": [ "prettier" ],
+	"extends": [ "plugin:prettier/recommended" ],
+
+	"parserOptions": {
+		"ecmaVersion": 2019
+	},
+	"rules": {
+		"prettier/prettier": [ "warn" ],
+		"space-unary-ops": [
+			"warn",
+			{
+				"words": true,
+				"nonwords": true,
+				"overrides": {
+					"-": false,
+					"+": false,
+					"--": false,
+					"++": false
+				}
+			}
+		],
+		"space-in-parens": [ "warn", "always" ],
+		"array-bracket-spacing": [ "warn", "always" ],
+		"object-curly-spacing": [ "warn", "always" ],
+		"computed-property-spacing": [ "warn", "always" ]
+	}
+}

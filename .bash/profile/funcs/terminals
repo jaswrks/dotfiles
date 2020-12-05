@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# In iTerm window?
+
+function in-iterm() {
+  if [[ "${TERM_PROGRAM:-}" == 'iTerm.app' ]];
+    then return 0; else return 1; fi;
+};
+
+# In Path Finder?
+
+function in-path-finder() {
+  if [[ "${TERMKIT_HOST_APP:-}" == 'Path Finder' ]];
+    then return 0; else return 1; fi;
+};
+
+# In VS Code?
+
+function in-vscode() {
+  if [[ "${TERM_PROGRAM:-}" == 'vscode' ]];
+    then return 0; else return 1; fi;
+};

@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# Unison utils.
+
+function unidown() {
+  local remote="${1:-}";
+  local root="${2:-}";
+  local dir=~/.unison/"${remote}";
+
+  find "${dir}" -type f ! -name '*.prf' -delete;
+  ssh "${remote}" 'find ~/.unison -type f ! -name '*.prf' -delete';
+
+  UNISON="${dir}" unison -batch -force "${root}" "${remote}";
+};
+
+function unisync() {
+  local remote="${1:-}";
+  local dir=~/.unison/"${remote}";
+
+  UNISON="${dir}" unison "${remote}";
+};
+
+function usync() {
+  local remote="${1:-}";
+  local dir=~/.unison/"${remote}";
+
+  UNISON="${dir}" unison -batch "${remote}";
+};
+
+function uwatch() {
+  local remote="${1:-}";
+  local dir=~/.unison/"${remote}";
+
+  UNISON="${dir}" unison -batch -repeat watch "${remote}";
+};

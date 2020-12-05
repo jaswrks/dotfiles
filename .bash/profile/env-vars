@@ -9,10 +9,26 @@ export LC_ALL=en_US.UTF-8;
 
 export CDPATH=.\
 :~\
-:~/docs\
-:~/downs\
+:~/projects\
+:~/projects/jaswrks\
+:~/projects/metagators\
+:~/projects/automattic\
 :~/tmp;
 
 # Default text editor.
 
 export EDITOR=/usr/bin/vim;
+
+# NVM configuration.
+
+if [ -f /usr/local/opt/nvm/nvm.sh ]; then
+  export NVM_DIR=~/.nvm;
+  . /usr/local/opt/nvm/nvm.sh --no-use;
+fi;
+
+# GPG-agent info.
+
+if [ -f ~/.gnupg/.gpg-agent-info ] && [ -n "$(pgrep gpg-agent)" ]; then
+  export GPG_TTY; GPG_TTY="$(tty)";
+  . ~/.gnupg/.gpg-agent-info; export GPG_AGENT_INFO;
+fi;

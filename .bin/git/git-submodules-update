@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2016
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Git repo requirements.
+
+. ~/.bash/require-git-repo;
+
+# Run commands.
+
+git submodule foreach --recursive 'git pull origin $(git rev-parse --abbrev-ref HEAD)';

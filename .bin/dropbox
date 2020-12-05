@@ -1,0 +1,131 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Dropbox CLI Tool.
+ *
+ * @since 2018-10-13
+ *
+ * @package Dotfiles
+ */
+declare( strict_types=1 );
+
+namespace Dotfiles;
+
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\DropboxFile;
+
+require_once dirname( __FILE__, 2 ) . '/.php/cli-bootstrap.php';
+
+/**
+ * Dropbox CLI Tool.
+ *
+ * @since 2018-10-13
+ */
+class Dropbox_CLI_Tool extends CLI_Tool {
+	/**
+	 * Current version.
+	 *
+	 * @since 2018-10-13
+	 *
+	 * @var string
+	 */
+	const VERSION = '0.0.1';
+
+	/**
+	 * Tool name.
+	 *
+	 * @since 2018-10-13
+	 *
+	 * @var string
+	 */
+	const NAME = 'Dropbox CLI Tool';
+
+	/**
+	 * Dropbox instance.
+	 *
+	 * @since 2018-10-13
+	 *
+	 * @var Dropbox
+	 */
+	protected $Dropbox;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 2018-10-13
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$config = dirname( __FILE__, 2 ) . '/.config/dropbox/app.json';
+		$config = json_decode( file_get_contents( $config ) );
+
+		$this->Dropbox = new Dropbox( new DropboxApp(
+			$config->client_id,
+			$config->client_secret,
+			$config->access_token
+		) );
+
+		$this->add_commands( [
+			'upload' => [
+				'synopsis' => 'Uploads file(s).',
+				'options'  => [],
+				'operands' => [
+					'file' => [
+						'requires'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+		] );
+
+		$this->route_request();
+	}
+
+	/**
+	 * Uploads a file.
+	 */
+	protected function upload() : void {
+		$files = $this->parser->getOperand( 'file' );
+		$files = remove_emptys( trim( $files ) );
+
+		foreach ( $files as $_file ) {
+			if ( ! $_file || ! is_file( $_file ) ) {
+				continue; // Not possible.
+			}
+
+			$_file_url            = ''; // Init.
+			$_basename            = basename( $_file );
+			$_DropboxFile         = DropboxFile::createByPath( $_file, DropboxFile::MODE_READ );
+			$_DropboxFileMetadata = $this->Dropbox->upload( $_DropboxFile, '/' . $_basename, [ 'autorename' => true ] );
+
+			try {
+				$_DropboxResponse = $this->Dropbox->postToAPI( '/sharing/create_shared_link_with_settings', [
+					'path' => $_DropboxFileMetadata->getPathLower(),
+				] );
+				$_shared_link     = $_DropboxResponse->getDecodedBody();
+
+				if ( ! empty( $_shared_link['url'] ) ) {
+					$_file_url = $_shared_link['url'];
+				}
+			} catch ( \Throwable $Exception ) {
+				$_DropboxResponse = $this->Dropbox->postToAPI( '/sharing/list_shared_links', [
+					'path' => $_DropboxFileMetadata->getPathLower(),
+				] );
+				$_shared_links    = $_DropboxResponse->getDecodedBody();
+
+				if ( ! empty( $_shared_links['links'][0]['url'] ) ) {
+					$_file_url = $_shared_links['links'][0]['url'];
+				}
+			}
+
+			if ( $_file_url ) {
+				$this->log( $_file_url, 'blue' );
+			}
+		}
+	}
+}
+
+new Dropbox_CLI_Tool();

@@ -1,0 +1,119 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Bitly CLI tool.
+ *
+ * @since 2018-11-01
+ *
+ * @package Dotfiles
+ */
+
+declare( strict_types=1 );
+
+namespace Dotfiles;
+
+use GuzzleHttp\Client as Guzzle;
+
+require_once dirname( __FILE__, 2 ) . '/.php/cli-bootstrap.php';
+
+/**
+ * Bitly CLI Tool.
+ *
+ * @since 2018-11-01
+ */
+class Bitly_CLI_Tool extends CLI_Tool {
+	/**
+	 * Current version.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	const VERSION = '0.0.1';
+
+	/**
+	 * Tool name.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	const NAME = 'Bitly CLI Tool';
+
+	/**
+	 * Bitly config.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var \StdClass
+	 */
+	protected $config;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 2018-11-01
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->config = dirname( __FILE__, 2 ) . '/.config/bitly/app.json';
+		$this->config = json_decode( file_get_contents( $this->config ) );
+
+		$this->add_commands( [
+			'shorten' => [
+				'synopsis' => 'Updates symlinks.',
+				'operands' => [
+					'url' => [
+						'required'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+		] );
+
+		$this->route_request();
+	}
+
+	/**
+	 * Shortens long URLs.
+	 *
+	 * @since 2018-11-01
+	 */
+	public function shorten() : void {
+		$guzzle    = new Guzzle();
+		$long_urls = $this->get_operand( 'url' );
+		$long_urls = remove_emptys( trim( $long_urls ) );
+
+		foreach ( $long_urls as $_long_url ) {
+			$_response = $guzzle->post( 'https://api-ssl.bitly.com/v4/shorten', [
+				'headers' => [
+					'authorization' => 'Bearer ' . $this->config->access_token,
+					'content-type'  => 'application/json',
+				],
+				'body'    => json_encode( [
+					'long_url' => $_long_url,
+				] ),
+			] );
+			$_status   = $_response->getStatusCode();
+			$_body     = (string) $_response->getBody();
+
+			if ( in_array( $_status, [ 200, 201 ], true ) ) {
+				$_json = json_decode( $_body );
+
+				if ( ! empty( $_json->link ) ) {
+					$this->output( $_json->link );
+				} else {
+					$this->error( 'Bad response: ' . $_body );
+					$this->exit_status( 1 );
+				}
+			} else {
+				$this->error( 'Bad response code: ' . $_status );
+				$this->exit_status( 1 );
+			}
+		}
+	}
+}
+
+new Bitly_CLI_Tool();

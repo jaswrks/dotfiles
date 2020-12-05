@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Delete all `.DS_Store` files.
+
+if [[ -n "${1:-}" ]]; then
+	dir="${1}";
+else
+	dir="$(pwd)";
+fi;
+
+find "${dir}" -type f -iname '.DS_Store' -print -delete;
+find "${dir}" -type l -iname '.DS_Store' -print -delete;

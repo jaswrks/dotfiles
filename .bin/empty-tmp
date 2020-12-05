@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Empty the `~/tmp` directory.
+
+rm --recursive --force --verbose ~/tmp/!(Icon*);

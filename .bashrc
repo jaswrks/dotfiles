@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 
-if [[ "${-}" == *i* && -f ~/.profile ]]; then
-    . ~/.profile;
+if [[ "${-}" == *i* && -f ~/.bash_profile ]]; then
+    . ~/.bash_profile;
 fi;

@@ -1,0 +1,4 @@
+[global]
+store-passwords = yes
+store-auth-creds = yes
+http-timeout = 0

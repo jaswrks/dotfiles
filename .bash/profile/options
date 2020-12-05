@@ -20,6 +20,10 @@ shopt -s histappend;
 bind '"\e[A": history-search-backward';
 bind '"\eOA": history-search-backward';
 
+# Exports `LS_COLORS`.
+
+eval "$(dircolors ~/.bash/profile/dircolors)";
+
 # Enable completion.
 # shellcheck disable=SC1091
 

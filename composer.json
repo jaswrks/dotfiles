@@ -1,0 +1,45 @@
+{
+	"type": "library",
+	"license": "GPL-3.0+",
+	"name": "jaswrks/dotfiles-pub",
+	"homepage": "https://github.com/jaswrks/dotfiles-pub",
+	"support": {
+		"source": "https://github.com/jaswrks/dotfiles-pub",
+		"issues": "https://github.com/jaswrks/dotfiles-pub/issues"
+	},
+	"description": "Jason's dotfiles (pub).",
+	"keywords": [
+		"jaswrks",
+		"dotfiles"
+	],
+	"authors": [
+		{
+			"name": "jaswrks",
+			"homepage": "http://jaswrks.com",
+			"role": "developer"
+		}
+	],
+	"require": {
+		"php": ">=7.4",
+		"ramsey/uuid": "3.*",
+		"guzzlehttp/guzzle": "6.*",
+		"ulrichsg/getopt-php": "3.*",
+		"martin-pettersson/chalk": "0.*",
+		"kunalvarma05/dropbox-php-sdk": "0.*"
+	},
+	"require-dev": {},
+	"autoload": {
+		"psr-4": {
+			"Dotfiles\\": ".php/classes/"
+		}
+	},
+	"autoload-dev": {},
+	"config": {
+		"vendor-dir": ".php/vendor",
+		"preferred-install": "dist",
+		"optimize-autoloader": true
+	},
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"repositories": []
+}

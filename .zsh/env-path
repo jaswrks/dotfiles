@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Path (i.e., $PATH).
+
+. ~/.bash/profile/env-path;

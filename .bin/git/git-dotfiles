@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2002
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Git repo requirements.
+
+. ~/.bash/require-git-repo;
+
+# Initialize.
+
+tree_dir="$(git-tree-dir)";
+
+# Preserve custom rules.
+
+existing_custom_gitignores='';
+existing_custom_gitattributes='';
+existing_custom_npmignores='';
+
+if [[ -f "${tree_dir}"/.gitignore ]]; then
+  cat "${tree_dir}"/.gitignore | perl -0wpe 's/.*?(#\s*\<custom\>.*?#\s*\<\/custom\>).*/$1/uis' > /tmp/.gitignore;
+  if ! cmp --quiet /tmp/.gitignore "${tree_dir}"/.gitignore; then
+    existing_custom_gitignores="$(cat /tmp/.gitignore)"; fi;
+fi;
+if [[ -f "${tree_dir}"/.gitattributes ]]; then
+  cat "${tree_dir}"/.gitattributes | perl -0wpe 's/.*?(#\s*\<custom\>.*?#\s*\<\/custom\>).*/$1/uis' > /tmp/.gitattributes;
+  if ! cmp --quiet /tmp/.gitattributes "${tree_dir}"/.gitattributes; then
+    existing_custom_gitattributes="$(cat /tmp/.gitattributes)"; fi;
+fi;
+if [[ -f "${tree_dir}"/.npmignore ]]; then
+  cat "${tree_dir}"/.npmignore | perl -0wpe 's/.*?(#\s*\<custom\>.*?#\s*\<\/custom\>).*/$1/uis' > /tmp/.npmignore;
+  if ! cmp --quiet /tmp/.npmignore "${tree_dir}"/.npmignore; then
+    existing_custom_npmignores="$(cat /tmp/.npmignore)"; fi;
+fi;
+# Backup existing dotfiles.
+
+if [[ -f "${tree_dir}"/.gitignore ]]; then
+  mv --no-clobber "${tree_dir}"/.gitignore{,~};
+fi;
+if [[ -f "${tree_dir}"/.gitattributes ]]; then
+  mv --no-clobber "${tree_dir}"/.gitattributes{,~};
+fi;
+if [[ -f "${tree_dir}"/.npmignore ]]; then
+  mv --no-clobber "${tree_dir}"/.npmignore{,~};
+fi;
+
+# Pull the latest dotfiles from the repo.
+
+fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.gitignore.x "${tree_dir}"/.gitignore;
+fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.gitattributes.x "${tree_dir}"/.gitattributes;
+
+if [[ -f "${tree_dir}"/package.json ]]; then
+  fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.npmignore.x "${tree_dir}"/.npmignore;
+fi; # Only for NPM projects with a `package.json` file.
+
+# Restore any customizations that existed prior.
+
+if [[ -f "${tree_dir}"/.gitignore && -n "${existing_custom_gitignores}" ]]; then
+  perl -i -0wpe 's/#\s*\<custom\>.*?#\s*\<\/custom\>/'"$(esc-regex-rv "${existing_custom_gitignores}")"'/uis' "${tree_dir}"/.gitignore;
+fi;
+if [[ -f "${tree_dir}"/.gitattributes && -n "${existing_custom_gitattributes}" ]]; then
+  perl -i -0wpe 's/#\s*\<custom\>.*?#\s*\<\/custom\>/'"$(esc-regex-rv "${existing_custom_gitattributes}")"'/uis' "${tree_dir}"/.gitattributes;
+fi;
+if [[ -f "${tree_dir}"/package.json && -f "${tree_dir}"/.npmignore && -n "${existing_custom_npmignores}" ]]; then
+  perl -i -0wpe 's/#\s*\<custom\>.*?#\s*\<\/custom\>/'"$(esc-regex-rv "${existing_custom_npmignores}")"'/uis' "${tree_dir}"/.npmignore;
+fi;
+
+# Delete backup files now.
+
+rm --force "${tree_dir}"/.gitignore~;
+rm --force "${tree_dir}"/.gitattributes~;
+rm --force "${tree_dir}"/.npmignore~;

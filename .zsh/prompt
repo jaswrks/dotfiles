@@ -1,0 +1,487 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2034
+
+# Globals --------------------------------------------------------------------------------------------------------------
+
+PROMPT=''; RPROMPT='';
+declare -A zshp_config;
+declare -A zshp_cache;
+declare -A zshp_persistent_cache;
+_r=''; # Return value variable.
+
+# Prompt callback for ZSH ----------------------------------------------------------------------------------------------
+
+function precmd() {
+  PROMPT=''; RPROMPT='';
+  zshp_cache=();
+
+  zshp-config; # Config.
+  zshp-prompt-dir-components;
+  zshp-prompt-command-entry;
+
+  if [[ "${zshp_config[use_rprompt]}" == true ]]; then
+    zshp-rprompt-git-icon;
+    zshp-rprompt-php-icon;
+    zshp-rprompt-js-icon;
+    zshp-rprompt-js-node-icon;
+    zshp-rprompt-vagrant-icon;
+    zshp-rprompt-format-display;
+  fi;
+};
+
+# PROMPT Handlers ------------------------------------------------------------------------------------------------------
+
+# Directory components.
+
+function zshp-prompt-dir-components() {
+  local dir components;
+
+  local leading_icon_char;
+  local separator_icon_char;
+  local trailing_icon_char;
+
+  local directory_home_icon_char;
+  local directory_icon_char;
+
+  declare -a bg_color_codes;
+  declare -a fg_color_codes;
+  local last_bg_color last_fg_color;
+
+  local _i=0 _component;
+  local _color_code=0 _next_color_code=1;
+  local _bg_color _fg_color _next_bg_color;
+  local _location_icon_char;
+
+  leading_icon_char='';
+  separator_icon_char='';
+  trailing_icon_char='';
+
+  directory_home_icon_char='';
+  directory_icon_char='';
+
+  if [[ "${zshp_config[theme]}" == 'light' ]]; then
+    bg_color_codes+=('252');
+    bg_color_codes+=('253');
+
+    fg_color_codes+=('240');
+    fg_color_codes+=('238');
+
+    last_bg_color='232';
+    last_fg_color='255';
+
+  else # Dark theme.
+
+    bg_color_codes+=('233');
+    bg_color_codes+=('235');
+
+    fg_color_codes+=('250');
+    fg_color_codes+=('250');
+
+    last_bg_color='255';
+    last_fg_color='016';
+  fi;
+
+  dir="${PWD/"${HOME}"/~}"; # Set home directory as just `~`.
+  dir="${dir##/}"; dir="${dir%%/}"; # Trim leading/trailing `/`.
+  components=("${(@s|/|)dir}"); # Split `/path` components.
+
+  for ((_i=1; _i <= ${#components[@]}; _i++)); do
+    _component="${components[$_i]}";
+
+    _color_code=$((_color_code+1));
+    [[ "${_color_code}" -gt "${#bg_color_codes[@]}" ]] && _color_code=1;
+
+    _bg_color="${bg_color_codes[$_color_code]}";
+    _fg_color="${fg_color_codes[$_color_code]}";
+
+    if [[ "${_i}" == "${#components[@]}" || $((_i+1)) == "${#components[@]}" ]]; then
+      _next_bg_color="${last_bg_color}";
+    else
+      _next_color_code=$((_color_code+1));
+      [[ "${_next_color_code}" -gt "${#bg_color_codes[@]}" ]] && _next_color_code=1;
+      _next_bg_color="${bg_color_codes[$_next_color_code]}";
+    fi;
+
+    if [[ "${_i}" == 1 ]]; then
+      if [[ "${_component}" == '~' ]]; then
+        _location_icon_char="${directory_home_icon_char}";
+      else _location_icon_char="${directory_icon_char}"; fi;
+
+      if [[ "${_i}" == "${#components[@]}" ]]; then
+        PROMPT+='%F{'"${last_bg_color}"'}'"${leading_icon_char}"'%f';
+        PROMPT+='%K{'"${last_bg_color}"'}%F{'"${last_fg_color}"'}'"${_location_icon_char}"'%f%k';
+      else
+        PROMPT+='%F{'"${_bg_color}"'}'"${leading_icon_char}"'%f';
+        PROMPT+='%K{'"${_bg_color}"'}%F{'"${_fg_color}"'}'"${_location_icon_char}"'%f%k';
+      fi;
+    fi;
+    if [[ "${_i}" == "${#components[@]}" ]]; then
+      if [[ "${#components[@]}" -gt 1 ]]; then
+        PROMPT+='%K{'"${last_bg_color}"'}%F{'"${last_fg_color}"'}'"  ${directory_icon_char}  ${_component}  "'%f%k';
+      else PROMPT+='%K{'"${last_bg_color}"'}%F{'"${last_fg_color}"'}'"  ${_component}  "'%f%k'; fi;
+      PROMPT+='%F{'"${last_bg_color}"'}'"${trailing_icon_char}"'%f';
+    else
+      PROMPT+='%K{'"${_bg_color}"'}%F{'"${_fg_color}"'}'"  ${_component}  "'%f%k';
+      PROMPT+='%K{'"${_next_bg_color}"'}%F{'"${_bg_color}"'}'"${separator_icon_char}"'%f%k';
+    fi;
+  done;
+  PROMPT+=$'\n'; # On a line of it's own.
+};
+
+# Command entry.
+
+function zshp-prompt-command-entry() {
+  local leading_icon_char;
+
+  local mac_icon_char;
+  local mac_separator_icon_char;
+
+  local vagrant_icon_char;
+  local vagrant_separator_icon_char;
+
+  local git_repo_icon_char;
+  local git_separator_icon_char;
+
+  local git_branch_icon_char;
+  local git_tag_icon_char;
+  local git_commit_icon_char;
+
+  local git_branch;
+  local git_tag;
+  local git_commit;
+  local git_state_icons;
+
+  local command_separator_icon_char;
+
+  declare -a bg_color_codes;
+  declare -a fg_color_codes;
+  local last_bg_color last_fg_color;
+
+  leading_icon_char='';
+
+  mac_icon_char=' ';
+  mac_separator_icon_char='';
+
+  vagrant_icon_char=' ⓥ';
+  vagrant_separator_icon_char='';
+
+  git_repo_icon_char=' ';
+  git_separator_icon_char='';
+
+  git_branch_icon_char='';
+  git_tag_icon_char='';
+  git_commit_icon_char='';
+
+  command_separator_icon_char='';
+
+  if [[ "${zshp_config[theme]}" == 'light' ]]; then
+    bg_color_codes+=('232');
+    bg_color_codes+=('069');
+    bg_color_codes+=('253');
+
+    fg_color_codes+=('255');
+    fg_color_codes+=('255');
+    fg_color_codes+=('238');
+
+    last_bg_color='252';
+    last_fg_color='238';
+
+  else # Default theme.
+
+    bg_color_codes+=('255');
+    bg_color_codes+=('004');
+    bg_color_codes+=('233');
+
+    fg_color_codes+=('016');
+    fg_color_codes+=('016');
+    fg_color_codes+=('250');
+
+    last_bg_color='235';
+    last_fg_color='250';
+  fi;
+
+  PROMPT+=' '; # Indentation.
+  PROMPT+='%F{'"${bg_color_codes[1]}"'}'"${leading_icon_char}"'%f';
+
+  if zshp-in-git-repo; then
+    PROMPT+='%K{'"${bg_color_codes[1]}"'}%F{'"${fg_color_codes[1]}"'}'"${git_repo_icon_char} "'%f%k';
+    PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${bg_color_codes[1]}"'}'"${git_separator_icon_char}"'%f%k';
+
+    zshp-git-branch; git_branch="${_r}";
+    if [[ -z "${git_branch}" ]]; then zshp-git-tag; git_tag="${_r}"; fi;
+    if [[ -z "${git_branch}" && -z "${git_tag}" ]]; then zshp-git-commit; git_commit="${_r}"; fi;
+    zshp-git-state-icons; git_state_icons="${_r}";
+
+    if [[ -n "${git_branch}" ]]; then
+      PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${fg_color_codes[2]}"'}'" ${git_branch_icon_char} ${git_branch} "'%f%k';
+    elif [[ -n "${git_tag}" ]]; then
+      PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${fg_color_codes[2]}"'}'" ${git_tag_icon_char} ${git_tag} "'%f%k';
+    else # Use commit SHA (default).
+      PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${fg_color_codes[2]}"'}'" ${git_commit_icon_char} ${git_commit} "'%f%k';
+    fi;
+    if [[ -n "${git_state_icons}" ]]; then
+      PROMPT+='%K{'"${bg_color_codes[3]}"'}%F{'"${bg_color_codes[2]}"'}'"${git_separator_icon_char}"'%f%k';
+      PROMPT+='%K{'"${bg_color_codes[3]}"'}%F{'"${fg_color_codes[3]}"'}'" ${git_state_icons} "'%f%k';
+
+      PROMPT+='%K{'"${last_bg_color}"'}%F{'"${bg_color_codes[3]}"'}'"${command_separator_icon_char}"'%f%k';
+      PROMPT+='%F{'"${last_bg_color}"'}'"${command_separator_icon_char}"'%f ';
+    else
+      PROMPT+='%K{'"${last_bg_color}"'}%F{'"${bg_color_codes[2]}"'}'"${command_separator_icon_char}"'%f%k';
+      PROMPT+='%F{'"${last_bg_color}"'}'"${command_separator_icon_char}"'%f ';
+    fi;
+  elif zshp-in-vagrant-project-dir; then
+    PROMPT+='%K{'"${bg_color_codes[1]}"'}%F{'"${fg_color_codes[1]}"'}'"${vagrant_icon_char} "'%f%k';
+    PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${bg_color_codes[1]}"'}'"${vagrant_separator_icon_char}"'%f%k';
+
+    PROMPT+='%K{'"${last_bg_color}"'}%F{'"${bg_color_codes[2]}"'}'"${command_separator_icon_char}"'%f%k';
+    PROMPT+='%F{'"${last_bg_color}"'}'"${command_separator_icon_char}"'%f ';
+  else
+    PROMPT+='%K{'"${bg_color_codes[1]}"'}%F{'"${fg_color_codes[1]}"'}'"${mac_icon_char} "'%f%k';
+    PROMPT+='%K{'"${bg_color_codes[2]}"'}%F{'"${bg_color_codes[1]}"'}'"${mac_separator_icon_char}"'%f%k';
+
+    PROMPT+='%K{'"${last_bg_color}"'}%F{'"${bg_color_codes[2]}"'}'"${command_separator_icon_char}"'%f%k';
+    PROMPT+='%F{'"${last_bg_color}"'}'"${command_separator_icon_char}"'%f ';
+  fi;
+};
+
+# RPROMPT Handlers -----------------------------------------------------------------------------------------------------
+
+# Status for Git project directory.
+
+function zshp-rprompt-git-icon() {
+  zshp-in-git-repo && RPROMPT+='   ';
+};
+
+# Status for WP themes/plugins.
+
+function zshp-rprompt-php-icon() {
+  zshp-in-php-project-dir && RPROMPT+='  ';
+};
+
+# Status for JS projects.
+
+function zshp-rprompt-js-icon() {
+  zshp-in-js-project-dir && RPROMPT+='  ';
+};
+
+# Status for Node projects.
+
+function zshp-rprompt-js-node-icon() {
+  zshp-in-js-node-project-dir && RPROMPT+='   ';
+};
+
+# Status for Vagrant directory.
+
+function zshp-rprompt-vagrant-icon() {
+  zshp-in-vagrant-project-dir && RPROMPT+=' ⓥ ';
+};
+
+# Format RPROMPT & maybe display as badge.
+
+function zshp-rprompt-format-display() {
+  RPROMPT="${RPROMPT//  / }"; # Replace double spaces w/ single spaces.
+  RPROMPT="${RPROMPT## }"; RPROMPT="${RPROMPT%% }"; # Trim leading/trailing whitespace.
+  in-iterm && zshp-rprompt-display-as-badge;
+};
+
+# Display RPROMPT as a badge.
+
+function zshp-rprompt-display-as-badge() {
+  echo -n "$(printf "\e]1337;SetBadgeFormat=%s\a" "$(echo -n "${RPROMPT}" | base64)")";
+  RPROMPT=''; # Empty this now; displaying as badge.
+};
+
+# Utilities ------------------------------------------------------------------------------------------------------------
+
+# Configuration.
+
+function zshp-config() {
+  if [[ ! ${zshp_config[theme]} ]]; then
+    zshp_config[theme]='dark';
+    zshp_config[scan_dirs]=1;
+    zshp_config[use_rprompt]=true;
+
+    if in-path-finder || in-vscode; then
+      zshp_config[use_rprompt]=false;
+    fi;
+  fi;
+};
+
+# Inside a Git repo?
+
+function zshp-in-git-repo() {
+  if [[ ! ${zshp_cache[in_git_repo]} ]]; then
+    if [[ -d "${PWD}"/.git ]]; then
+      zshp_cache[in_git_repo]=0;
+    elif git rev-parse --is-inside-work-tree &>/dev/null; then
+      zshp_cache[in_git_repo]=0;
+    fi;
+    [[ ! ${zshp_cache[in_git_repo]} ]] && zshp_cache[in_git_repo]=1;
+  fi;
+  return "${zshp_cache[in_git_repo]}";
+};
+
+# Git repo top-level directory.
+
+function zshp-git-repo() {
+  if [[ ! ${zshp_cache[git_repo]} ]]; then
+    if zshp-in-git-repo; then
+      zshp_cache[git_repo]="$(git rev-parse --show-toplevel 2>/dev/null)";
+    fi;
+    [[ ! ${zshp_cache[git_repo]} ]] && zshp_cache[git_repo]='';
+  fi;
+  _r="${zshp_cache[git_repo]}";
+};
+
+# Git repo top-level directory basename.
+
+function zshp-git-repo-basename() {
+  if [[ ! ${zshp_cache[git_repo_basename]} ]]; then
+    if zshp-in-git-repo; then
+      zshp-git-repo; local repo="${_r}";
+      zshp_cache[git_repo_basename]="${repo##*/}";
+    fi;
+    [[ ! ${zshp_cache[git_repo_basename]} ]] && zshp_cache[git_repo_basename]='';
+  fi;
+  _r="${zshp_cache[git_repo_basename]}";
+};
+
+# Git repo branch.
+
+function zshp-git-branch() {
+  if [[ ! ${zshp_cache[git_branch]} ]]; then
+    if zshp-in-git-repo; then
+      zshp_cache[git_branch]="$(git symbolic-ref --short --quiet HEAD 2>/dev/null)";
+    fi;
+    [[ ! ${zshp_cache[git_branch]} ]] && zshp_cache[git_branch]='';
+  fi;
+  _r="${zshp_cache[git_branch]}";
+};
+
+# Git repo tag.
+
+function zshp-git-tag() {
+  if [[ ! ${zshp_cache[git_tag]} ]]; then
+    if zshp-in-git-repo; then
+      zshp_cache[git_tag]="$(git describe --tags --exact-match 2>/dev/null)";
+    fi;
+    [[ ! ${zshp_cache[git_tag]} ]] && zshp_cache[git_tag]='';
+  fi;
+  _r="${zshp_cache[git_tag]}";
+};
+
+# Git repo commit.
+
+function zshp-git-commit() {
+  if [[ ! ${zshp_cache[git_commit]} ]]; then
+    if zshp-in-git-repo; then
+      zshp_cache[git_commit]="$(git rev-parse --short HEAD 2>/dev/null)";
+    fi;
+    [[ ! ${zshp_cache[git_commit]} ]] && zshp_cache[git_commit]='';
+  fi;
+  _r="${zshp_cache[git_commit]}";
+};
+
+# Git state icons.
+
+function zshp-git-state-icons() {
+  if [[ ! ${zshp_cache[git_state_icons]} ]]; then
+    if zshp-in-git-repo; then
+      local icons=''; # Initialize.
+      local dirty='  ';
+      local is_dirty;
+
+      if ! git diff --no-ext-diff --quiet 2>/dev/null || ! git diff --no-ext-diff --cached --quiet 2>/dev/null; then
+        is_dirty=1; else is_dirty=0; fi; # See: <https://jas.xyz/2zAFxwn>
+
+      if [[ "${is_dirty}" == 1 ]]; then
+        icons+="${dirty}";
+      fi;
+      if [[ -n "${icons}" ]]; then
+        icons="${icons//  / }"; # Replace double spaces w/ single spaces.
+        icons="${icons## }"; icons="${icons%% }"; # Trim leading/trailing whitespace.
+      fi;
+      zshp_cache[git_state_icons]="${icons}";
+    fi;
+    [[ ! ${zshp_cache[git_state_icons]} ]] && zshp_cache[git_state_icons]='';
+  fi;
+  _r="${zshp_cache[git_state_icons]}";
+};
+
+# Inside a PHP directory?
+
+function zshp-in-php-project-dir() {
+  if [[ ! ${zshp_cache[in_php_project_dir]} ]]; then
+    if zshp-in-git-repo; then
+      zshp-git-repo; local repo="${_r}";
+
+      if [[ -f "${repo}"/index.php \
+          || -f "${repo}"/composer.json \
+          || -f "${repo}"/phpunit.xml.dist \
+          || -f "${repo}"/phpunit.xml ]]; then
+        zshp_cache[in_php_project_dir]=0;
+      fi;
+    fi;
+    [[ ! ${zshp_cache[in_php_project_dir]} ]] && zshp_cache[in_php_project_dir]=1;
+  fi;
+  return "${zshp_cache[in_php_project_dir]}";
+};
+
+# Inside a JS project directory?
+
+function zshp-in-js-project-dir() {
+  if [[ ! ${zshp_cache[in_js_project_dir]} ]]; then
+    if zshp-in-git-repo; then
+      zshp-git-repo; local repo="${_r}";
+
+      if [[ -f "${repo}"/package.json \
+          || -f "${repo}"/bower.json \
+          || -f "${repo}"/.jshintrc \
+          || -f "${repo}"/.eslintrc ]]; then
+        zshp_cache[in_js_project_dir]=0;
+      fi;
+    fi;
+    [[ ! ${zshp_cache[in_js_project_dir]} ]] && zshp_cache[in_js_project_dir]=1;
+  fi;
+  return "${zshp_cache[in_js_project_dir]}";
+};
+
+# Inside a JS + Node project directory?
+
+function zshp-in-js-node-project-dir() {
+  if [[ ! ${zshp_cache[in_js_node_project_dir]} ]]; then
+    if zshp-in-js-project-dir; then
+      zshp-git-repo; local repo="${_r}";
+
+      if [[ -f "${repo}"/package.json ]]; then
+        zshp_cache[in_js_node_project_dir]=0;
+      fi;
+    fi;
+    [[ ! ${zshp_cache[in_js_node_project_dir]} ]] && zshp_cache[in_js_node_project_dir]=1;
+  fi;
+  return "${zshp_cache[in_js_node_project_dir]}";
+};
+
+# Inside a Vagrant directory?
+
+function zshp-in-vagrant-project-dir() {
+  if [[ ! ${zshp_cache[in_vagrant_project_dir]} ]]; then
+    if zshp-in-git-repo; then
+      zshp-git-repo; local repo="${_r}";
+
+      if [[ -f "${repo}"/Vagrantfile ]]; then
+        zshp_cache[in_vagrant_project_dir]=0;
+      fi;
+    fi;
+    [[ ! ${zshp_cache[in_vagrant_project_dir]} ]] && zshp_cache[in_vagrant_project_dir]=1;
+  fi;
+  return "${zshp_cache[in_vagrant_project_dir]}";
+};
+
+# Handle SSH Connections -----------------------------------------------------------------------------------------------
+
+if in-iterm && ! type ssh | grep --quiet 'shell function'; then
+  function ssh() {
+    printf "\e]1337;SetBadgeFormat=%s\a" "$(echo -n '' | base64)"; command ssh "${@}";
+  };
+fi;

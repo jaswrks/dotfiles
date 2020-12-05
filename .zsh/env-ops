@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Environment options.
+
+. ~/.bash/profile/env-ops;

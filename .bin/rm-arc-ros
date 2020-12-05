@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Delete all `.rej` and `.orig` files.
+
+if [[ -n "${1:-}" ]]; then
+	dir="${1}";
+else
+	dir="$(pwd)";
+fi;
+
+find "${dir}" -type f -iname '*.rej' -print -delete;
+find "${dir}" -type f -iname '*.orig' -print -delete;
