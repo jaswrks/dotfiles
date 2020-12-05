@@ -22,9 +22,9 @@
 	"require": {
 		"php": ">=7.4",
 		"ramsey/uuid": "3.*",
+		"jaswrks/chalk": "0.*",
 		"guzzlehttp/guzzle": "6.*",
 		"ulrichsg/getopt-php": "3.*",
-		"martin-pettersson/chalk": "0.*",
 		"kunalvarma05/dropbox-php-sdk": "0.*"
 	},
 	"require-dev": {},
