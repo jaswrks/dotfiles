@@ -2,7 +2,6 @@
 	name = Jason Caldwell
 	email = jaswrks@o5p.me
   url = https://jaswrks.com
-	signingkey = D6125FF6
 [core]
   eol = lf
   autocrlf = input
@@ -30,5 +29,3 @@
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
-[commit]
-	gpgsign = true
