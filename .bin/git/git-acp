@@ -52,7 +52,7 @@ if [[ -n "${main_dev}" ]]; then
 
 	else other_branch=''; fi;
 
-	if [[ -n "${other_branch}" ]]; then
+	if [[ -n "${other_branch}" ]] && git-branch-exists "${other_branch}"; then
 		git checkout "${other_branch}" && git merge "${start_branch}" && git push;
 		git checkout "${start_branch}";
 	fi;
