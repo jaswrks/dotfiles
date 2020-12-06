@@ -13,6 +13,9 @@ setopt extended_glob; # See: <http://bit.ly/1Re99Pf>
 # Allow comments on the command line when experimenting.
 setopt interactive_comments; # See: <http://bit.ly/1Re99Pf>
 
+# Parse `~` even when it's preceded by `=~` in a CLI arg.
+setopt magic_equal_subst; # See: <https://xyz.jaswrks.com/g8rx>
+
 # Enable the `zmv` command for search/replace in filenames.
 autoload -U zmv;
 
