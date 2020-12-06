@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <ruleset name="WordPress-Loose">
   <description>WordPress loose ruleset.</description>
-  <autoload>/users/jason/.libs/wpcs/vendor/autoload.php</autoload>
+  <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
   <rule ref="WordPress">
     <exclude name="Squiz.PHP.CommentedOutCode.Found" />
