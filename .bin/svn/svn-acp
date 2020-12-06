@@ -35,5 +35,5 @@ fi;
 
 # Run commands.
 
-svn add ./* --force;
+svn add . --force;
 svn commit --message "${message}";

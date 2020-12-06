@@ -10,4 +10,4 @@
 
 # Run commands.
 
-svn revert --recursive . && svn cleanup . --remove-unversioned;
+svn revert . --recursive && svn cleanup . --remove-unversioned;
