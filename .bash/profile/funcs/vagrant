@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-# Vagrant shortcut/alias.
-
-function vm() {
-  vagrant "${@}";
-};

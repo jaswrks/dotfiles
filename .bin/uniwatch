@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Get arguments.
+
+remote_ssh_handle='';
+
+while [[ $# -gt 0 ]]; do
+  case "${1}" in
+    --remote-ssh-handle=*)
+      remote_ssh_handle="${1#*=}"
+      shift;
+      ;;
+    *)
+      echo 'Invalid arguments.'; exit 1;
+  esac;
+done;
+
+local_unison_dir=~/.unison/"${remote_ssh_handle}";
+
+# Validate arguments.
+
+if [[ -z "${remote_ssh_handle}" || ! -d "${local_unison_dir}" ]]; then
+	echo 'Invalid --remote-ssh-handle value.'; exit 1;
+fi;
+
+# Run commands.
+
+UNISON="${local_unison_dir}" unison -batch -repeat watch "${remote_ssh_handle}";

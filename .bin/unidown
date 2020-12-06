@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Get arguments.
+
+remote_ssh_handle='';
+local_root_dir='';
+
+while [[ $# -gt 0 ]]; do
+  case "${1}" in
+    --remote-ssh-handle=*)
+      remote_ssh_handle="${1#*=}"
+      shift;
+      ;;
+    --local-root-dir=*)
+      local_root_dir="${1#*=}"
+      shift;
+      ;;
+    *)
+      echo 'Invalid arguments.'; exit 1;
+  esac;
+done;
+
+local_unison_dir=~/.unison/"${remote_ssh_handle}";
+
+# Validate arguments.
+
+if [[ -z "${remote_ssh_handle}" || ! -d "${local_unison_dir}" ]]; then
+	echo 'Invalid --remote-ssh-handle value.'; exit 1;
+elif [[ -z "${local_root_dir}" || ! -d "${local_root_dir}" ]]; then
+	echo 'Invalid --local-root-dir value.'; exit 1;
+fi;
+
+# Run commands.
+
+find "${local_unison_dir}" -type f ! -name '*.prf' -delete || true;
+ssh "${remote_ssh_handle}" 'find ~/.unison -type f ! -name '*.prf' -delete' || true;
+
+UNISON="${local_unison_dir}" unison -batch -force "${local_unison_dir}" "${remote_ssh_handle}";
