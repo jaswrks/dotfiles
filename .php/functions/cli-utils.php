@@ -43,11 +43,13 @@ function get_stdin( int $lines = 0 ) : string {
 /**
  * Executes a shell command (throws exception on failure).
  *
- * @param string $cmd Command to execute.
+ * @param string      $cmd Command to execute.
+ * @param string|null $cwd Current working directory. Default is `null`.
  *
  * @throws \Exception On non-zero exit status code.
  */
-function passthru( string $cmd ) {
+function passthru( string $cmd, string $cwd = null ) {
+	$cmd = $cwd ? 'cd ' . quote_shell_arg( $cwd ) . ' && ' . $cmd : $cmd;
 	\passthru( $cmd, $status );
 
 	if ( 0 !== $status ) {
