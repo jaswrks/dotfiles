@@ -29,9 +29,9 @@ local_unison_dir=~/.unison/"${remote_ssh_handle}";
 # Validate arguments.
 
 if [[ -z "${remote_ssh_handle}" || ! -d "${local_unison_dir}" ]]; then
-	echo 'Invalid --remote-ssh-handle value.'; exit 1;
+	echo 'Invalid --remote-ssh-handle value: '"${remote_ssh_handle}"; exit 1;
 elif [[ -z "${local_root_dir}" || ! -d "${local_root_dir}" ]]; then
-	echo 'Invalid --local-root-dir value.'; exit 1;
+	echo 'Invalid --local-root-dir value: '"${local_root_dir}"; exit 1;
 fi;
 
 # Run commands.
