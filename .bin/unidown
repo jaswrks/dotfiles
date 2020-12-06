@@ -40,4 +40,4 @@ fi;
 find "${local_unison_dir}" -type f ! -name '*.prf' -delete || true;
 ssh "${remote_ssh_handle}" 'find ~/.unison -type f ! -name '*.prf' -delete' || true;
 
-UNISON="${local_unison_dir}" unison -batch -force "${local_unison_dir}" "${remote_ssh_handle}";
+UNISON="${local_unison_dir}" unison -batch -force "${local_root_dir}" "${remote_ssh_handle}";
