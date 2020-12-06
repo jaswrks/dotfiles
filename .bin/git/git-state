@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Git repo requirements.
+
+. ~/.bash/require-git-repo;
+
+# Collect arguments.
+
+git status --ignore-submodules "${@}";

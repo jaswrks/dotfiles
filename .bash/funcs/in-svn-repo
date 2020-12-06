@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# In an SVN repo?
+
+function in-svn-repo() {
+  local dir=''; # Initialize.
+  dir="$(pwd)"; # Current directory.
+
+  while [[ -n "${dir}" && "${dir}" != / && "${dir}" != . && ! -d "${dir}"/.svn ]]; do
+    dir="$(dirname "${dir}")";
+  done;
+  if [[ -z "${dir}" || ! -d "${dir}"/.svn ]]; then
+    return 1; # False.
+  fi;
+  return 0; # True.
+};

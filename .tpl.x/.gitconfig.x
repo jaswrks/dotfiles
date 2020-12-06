@@ -21,9 +21,6 @@
   interactive = auto
 [credential]
   helper = store
-[alias]
-  # See: `~/.bin/git` for others.
-  aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
 [filter "lfs"]
   required = true
 	clean = git-lfs clean -- %f

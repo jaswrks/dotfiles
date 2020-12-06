@@ -39,7 +39,7 @@ fi;
 
 # Run commands.
 
-git add --all && git commit -m "${message}" && git push;
+git add --all && git commit --message="${message}" && git push;
 
 if [[ -n "${main_dev}" ]]; then
 	start_branch="$(git-current-branch)";

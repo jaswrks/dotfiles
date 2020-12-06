@@ -2,13 +2,10 @@
 
 # SVN aliases.
 
-function s() {
-  :: svn "${@}";
+function svn() {
+  if [[ -x ~/.bin/svn/"${1:-}" ]]; then
+    ~/.bin/svn/"${1:-}" "${@:2}";
+  else
+    :: svn "${@}";
+  fi;
 };
-function ss() { svn status --ignore-externals "${@}"; };
-function sco() { svn checkout "${@}"; };
-
-function sa() { svn add "${@}"; };
-function sc() { svn commit "${@}"; };
-
-function sd() { svn diff "${@}"; };

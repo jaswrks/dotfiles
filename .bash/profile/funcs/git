@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-# See: `~/.bin/git` for others.
+# Git aliases.
 
-function g() {
-  :: git "${@}";
+function git() {
+  if [[ -x ~/.bin/git/"${1:-}" ]]; then
+    ~/.bin/git/"${1:-}" "${@:2}";
+  else
+    :: git "${@}";
+  fi;
 };
-function gs() { git status "${@}"; };
-function gco() { git checkout "${@}"; };
-
-function ga() { git add "${@}"; };
-function gaa() { git add --all "${@}"; };
-function gc() { git commit "${@}"; };
-function gp() { git push "${@}"; };
-
-function gd() { git diff "${@}"; };

@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# SVN repo requirements.
+
+. ~/.bash/require-svn-repo;
+
+# Run commands.
+
+date +'%s' > "$(svn-tree-dir)"/.svnchange;

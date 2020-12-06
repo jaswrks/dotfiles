@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Require a git repo.
+# Require a Git repo.
 
 if ! in-git-repo; then
   echo 'Not a Git repo.';

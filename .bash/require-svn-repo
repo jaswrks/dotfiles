@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+# Require an SVN repo.
+
+if ! in-svn-repo; then
+  echo 'Not an SVN repo.';
+  exit 1;
+fi;

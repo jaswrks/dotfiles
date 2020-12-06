@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2016
 
 # Include bootstrap.
 
@@ -11,4 +10,4 @@
 
 # Run commands.
 
-git submodule foreach --recursive 'git pull origin "$(git rev-parse --abbrev-ref HEAD)"';
+git log --abbrev-commit --pretty=oneline --decorate --graph --all "${@}";
