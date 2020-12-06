@@ -31,7 +31,7 @@ local_unison_dir=~/.unison/"${remote_ssh_handle}";
 
 if [[ -z "${remote_ssh_handle}" || ! -d "${local_unison_dir}" ]]; then
 	echo 'Invalid --remote-ssh-handle: '"${remote_ssh_handle}"; exit 1;
-elif [[ -n "${local_root_dir}" || -z "${local_root_dir}" || ! -d "${local_root_dir}" ]]; then
+elif [[ -z "${local_root_dir}" || ! -d "${local_root_dir}" ]]; then
 	echo 'Invalid --local-root-dir: '"${local_root_dir}"; exit 1;
 fi;
 
