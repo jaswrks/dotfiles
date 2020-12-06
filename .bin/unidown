@@ -32,4 +32,4 @@ fi;
 
 find "${local_unison_dir}" -type f ! -name '*.prf' -delete;
 ssh "${remote_ssh_handle}" 'find ~/.unison -type f ! -name '"'"'*.prf'"'"' -delete';
-UNISON="${local_unison_dir}" unison -batch "${remote_ssh_handle}";
+UNISON="${local_unison_dir}" unison -batch -force /users/jason/projects/automattic/wpcom-sandbox "${remote_ssh_handle}";
