@@ -3,8 +3,8 @@
 # Git aliases.
 
 function git() {
-  if [[ -x ~/.bin/git/"${1:-}" ]]; then
-    ~/.bin/git/"${1:-}" "${@:2}";
+  if [[ -x ~/.bin/git/git-"${1:-}" ]]; then
+    ~/.bin/git/git-"${1:-}" "${@:2}";
   else
     :: git "${@}";
   fi;

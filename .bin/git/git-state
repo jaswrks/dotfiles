@@ -8,6 +8,6 @@
 
 . ~/.bash/require-git-repo;
 
-# Collect arguments.
+# Run commands.
 
 git status --ignore-submodules "${@}";

@@ -3,8 +3,8 @@
 # SVN aliases.
 
 function svn() {
-  if [[ -x ~/.bin/svn/"${1:-}" ]]; then
-    ~/.bin/svn/"${1:-}" "${@:2}";
+  if [[ -x ~/.bin/svn/svn-"${1:-}" ]]; then
+    ~/.bin/svn/svn-"${1:-}" "${@:2}";
   else
     :: svn "${@}";
   fi;
