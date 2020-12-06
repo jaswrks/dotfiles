@@ -20,10 +20,11 @@ while [[ $# -gt 0 ]]; do
 done;
 
 local_unison_dir=~/.unison/"${remote_ssh_handle}";
+local_unison_prf="${local_unison_dir}"/"${remote_ssh_handle}".prf;
 
 # Validate arguments.
 
-if [[ -z "${remote_ssh_handle}" || ! -d "${local_unison_dir}" ]]; then
+if [[ -z "${remote_ssh_handle}" || ! -f "${local_unison_prf}" ]]; then
 	echo 'Invalid --remote-ssh-handle: '"${remote_ssh_handle}"; exit 1;
 fi;
 
