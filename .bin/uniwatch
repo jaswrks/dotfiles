@@ -7,11 +7,16 @@
 # Get arguments.
 
 remote_ssh_handle='';
+ask_no_questions='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
     --remote-ssh-handle=*)
       remote_ssh_handle="${1#*=}";
+      shift;
+      ;;
+    --ask-no-questions)
+      ask_no_questions='-batch';
       shift;
       ;;
     *)
@@ -30,4 +35,4 @@ fi;
 
 # Run commands.
 
-UNISON="${local_unison_dir}" unison -batch -repeat watch "${remote_ssh_handle}" || true;
+UNISON="${local_unison_dir}" unison "${ask_no_questions}" -repeat watch "${remote_ssh_handle}" || true;

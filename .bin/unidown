@@ -8,6 +8,7 @@
 
 remote_ssh_handle='';
 local_dir_dir='';
+ask_no_questions='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
@@ -17,6 +18,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --local-root-dir=*)
       local_dir_dir="${1#*=}";
+      shift;
+      ;;
+    --ask-no-questions)
+      ask_no_questions='-batch';
       shift;
       ;;
     *)
@@ -42,4 +47,4 @@ fi;
 find "${local_unison_dir}" -type f ! -name '*.prf' -delete;
 ssh "${remote_ssh_handle}" 'find ~/.unison -type f ! -name '"'"'*.prf'"'"' -delete';
 
-UNISON="${local_unison_dir}" unison -batch "${remote_ssh_handle}" || true;
+UNISON="${local_unison_dir}" unison "${ask_no_questions}" "${remote_ssh_handle}" || true;
