@@ -7,8 +7,8 @@ function unidown() {
   local root="${2:-}";
   local dir=~/.unison/"${remote}";
 
-  find "${dir}" -type f ! -name '*.prf' -delete;
-  ssh "${remote}" 'find ~/.unison -type f ! -name '*.prf' -delete';
+  find "${dir}" -type f ! -name '*.prf' -delete || true;
+  ssh "${remote}" 'find ~/.unison -type f ! -name '*.prf' -delete' || true;
 
   UNISON="${dir}" unison -batch -force "${root}" "${remote}";
 };
