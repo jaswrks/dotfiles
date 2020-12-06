@@ -16,7 +16,7 @@ while [[ $# -gt 0 ]]; do
       shift;
       ;;
     --local-root-dir=*)
-      local_root_dir="${"${1#*=}"/#\~/"${HOME}"}";
+      local_root_dir="${${1#*=}/#\~/${HOME}}";
       shift;
       ;;
     *)
