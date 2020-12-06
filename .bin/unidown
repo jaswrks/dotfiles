@@ -7,11 +7,16 @@
 # Get arguments.
 
 remote_ssh_handle='';
+local_dir_dir='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
     --remote-ssh-handle=*)
       remote_ssh_handle="${1#*=}";
+      shift;
+      ;;
+    --local-root-dir=*)
+      local_dir_dir="${1#*=}";
       shift;
       ;;
     *)
@@ -26,6 +31,10 @@ local_unison_prf="${local_unison_dir}"/"${remote_ssh_handle}".prf;
 
 if [[ -z "${remote_ssh_handle}" || ! -f "${local_unison_prf}" ]]; then
 	echo 'Invalid --remote-ssh-handle: '"${remote_ssh_handle}"; exit 1;
+elif [[ -z "${local_dir_dir}" || ! -d "${local_dir_dir}" ]]; then
+	echo 'Invalid --local-root-dir: '"${local_dir_dir}"; exit 1;
+elif [[ -n "$(ls -A "${local_dir_dir}")" ]]; then
+	echo '--local-root-dir is not empty: '"${local_dir_dir}"; exit 1;
 fi;
 
 # Run commands.
