@@ -30,4 +30,4 @@ fi;
 
 # Run commands.
 
-UNISON="${local_unison_dir}" unison -batch "${remote_ssh_handle}";
+UNISON="${local_unison_dir}" unison "${remote_ssh_handle}" || true;
