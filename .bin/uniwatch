@@ -11,7 +11,7 @@ remote_ssh_handle='';
 while [[ $# -gt 0 ]]; do
   case "${1}" in
     --remote-ssh-handle=*)
-      remote_ssh_handle="${1#*=}"
+      remote_ssh_handle="${1#*=}";
       shift;
       ;;
     *)
