@@ -35,6 +35,12 @@
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
+
+    <rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		  <properties>
+			  <property name="maxColumn" value="160"/>
+		  </properties>
+	  </rule>
   </rule>
 
   <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
