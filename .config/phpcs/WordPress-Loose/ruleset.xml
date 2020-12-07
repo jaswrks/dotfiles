@@ -38,5 +38,6 @@
   </rule>
 
   <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+  <rule ref="Squiz.Arrays.ArrayDeclaration.DoubleArrowNotAligned" />
 
 </ruleset>
