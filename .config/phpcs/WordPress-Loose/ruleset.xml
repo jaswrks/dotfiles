@@ -4,6 +4,12 @@
   <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
   <rule ref="WordPress">
+    <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+    <exclude name="WordPress.PHP.DisallowShortTernary.Found" />
+    <exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+
     <exclude name="Squiz.PHP.CommentedOutCode.Found" />
     <exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
     <exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
@@ -13,25 +19,22 @@
     <exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket" />
     <exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine" />
 
-    <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-
     <exclude name="Squiz.PHP.DisallowMultipleAssignments.Found" />
     <exclude name="WordPress.CodeAnalysis.AssignmentInCondition.Found" />
     <exclude name="WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
 
     <exclude name="Squiz.Operators.IncrementDecrementUsage.Found" />
-    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
 
-    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
-    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
-    <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
+    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
+    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_var_export" />
 
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_proc_open" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_passthru" />
 
-    <exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
+    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
+    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
+    <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
   </rule>
 
   <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
