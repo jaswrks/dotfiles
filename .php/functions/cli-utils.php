@@ -28,7 +28,7 @@ function get_stdin( int $lines = 0 ) : string {
 	// It's either here now, or it's not available.
 	stream_set_blocking( STDIN, false );
 
-	while ( false !== ( $_line = fgets( STDIN ) ) ) { // phpcs:ignore
+	while ( false !== ( $_line = fgets( STDIN ) ) ) {
 		$stdin .= $_line;
 		$lines_read++;
 

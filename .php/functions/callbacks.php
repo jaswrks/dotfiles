@@ -70,4 +70,3 @@ function __empty( $v ) : bool {
 function __not_empty( $v ) : bool {
 	return ! empty( $v );
 }
-
