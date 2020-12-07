@@ -37,11 +37,12 @@
     <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
   </rule>
 
+  <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+
   <rule ref="WordPress.Arrays.MultipleStatementAlignment">
 		  <properties>
-			  <property name="maxColumn" value="1160"/>
+			  <property name="maxColumn" value="1000"/>
 		  </properties>
   </rule>
-  <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 
 </ruleset>
