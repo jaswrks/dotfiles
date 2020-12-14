@@ -1,10 +1,10 @@
 [user]
-	name = Jason Caldwell
-	email = jaswrks@o5p.me
+  name = Jason Caldwell
+  email = jaswrks@o5p.me
   url = https://jaswrks.com
-	signingkey = D6125FF6
+  signingkey = D6125FF6
 [commit]
-	gpgsign = true
+  gpgsign = true
 [core]
   eol = lf
   autocrlf = input
@@ -15,7 +15,7 @@
 [push]
   default = simple
 [pull]
-	rebase = true
+  rebase = true
 [color]
   ui = auto
   diff = auto
@@ -26,6 +26,6 @@
   helper = store
 [filter "lfs"]
   required = true
-	clean = git-lfs clean -- %f
-	smudge = git-lfs smudge -- %f
-	process = git-lfs filter-process
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  process = git-lfs filter-process
