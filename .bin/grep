@@ -3,7 +3,7 @@
 # `grep` wrapper.
 
 if can-run ggrep; then
-	ggrep --perl-regexp --color=auto "${@}"; # GNU flavor.
+	ggrep "${@}"; # GNU flavor.
 else
-	:: grep --perl-regexp --color=auto "${@}";
+	:: grep "${@}";
 fi;

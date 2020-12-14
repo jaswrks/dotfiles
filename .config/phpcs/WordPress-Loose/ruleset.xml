@@ -3,10 +3,14 @@
   <description>WordPress loose ruleset.</description>
   <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
-  <rule ref="WordPress">
-    <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
-    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace" />
 
+  <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
+  <rule ref="WordPress.Arrays.MultipleStatementAlignment">
+		  <properties><property name="maxColumn" value="1000" /></properties>
+  </rule>
+
+  <rule ref="WordPress">
     <exclude name="WordPress.PHP.DisallowShortTernary.Found" />
     <exclude name="Generic.Arrays.DisallowShortArraySyntax.Found" />
 
@@ -24,6 +28,10 @@
     <exclude name="WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
 
     <exclude name="Squiz.Operators.IncrementDecrementUsage.Found" />
+    <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
+    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+
+    <exclude name="WordPress.WP.AlternativeFunctions.json_encode_json_encode" />
 
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_var_export" />
@@ -32,17 +40,13 @@
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_proc_open" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_passthru" />
 
+    <exclude name="WordPress.VIP.FileSystemWritesDisallow.file_ops_fwrite" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
+
+    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_ini_set" />
+    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_error_reporting" />
+    <exclude name="WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting" />
   </rule>
-
-  <rule ref="Generic.Arrays.DisallowLongArraySyntax" />
-
-  <rule ref="WordPress.Arrays.MultipleStatementAlignment">
-		  <properties>
-			  <property name="maxColumn" value="1000"/>
-		  </properties>
-  </rule>
-
 </ruleset>

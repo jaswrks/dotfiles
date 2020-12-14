@@ -1,22 +1,5 @@
 <?xml version="1.0" ?>
 <ruleset name="Default">
   <description>Default ruleset.</description>
-
-  <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace" />
-
-  <rule ref="WordPress-Loose">
-    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_ini_set" />
-    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_error_reporting" />
-    <exclude name="WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_error_reporting" />
-
-    <exclude name="WordPress.VIP.FileSystemWritesDisallow.file_ops_fwrite" />
-    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
-    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
-
-    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec" />
-    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_proc_open" />
-    <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_passthru" />
-
-    <exclude name="WordPress.WP.AlternativeFunctions.json_encode_json_encode" />
-  </rule>
+  <rule ref="WordPress-Loose"></rule>
 </ruleset>
