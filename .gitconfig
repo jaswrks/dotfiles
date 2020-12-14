@@ -2,6 +2,9 @@
 	name = Jason Caldwell
 	email = jaswrks@o5p.me
   url = https://jaswrks.com
+	signingkey = D6125FF6
+[commit]
+	gpgsign = true
 [core]
   eol = lf
   autocrlf = input
