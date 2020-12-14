@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Collect old & new passwords.
+
+if [[ -n "${1:-}" && -n "${2:-}" ]]; then
+  old_password="${1}";
+  new_password="${2}";
+  new_password2="${2}";
+else
+  read -rs -p 'Old Password: ' old_password && echo;
+  read -rs -p 'New Password: ' new_password && echo;
+  read -rs -p 'Confirm New Password: ' new_password2 && echo -e '\n';
+fi;
+
+if [[ -z "${old_password}" ]]; then
+  echo 'Missing old password.'; exit 1;
+fi;
+if [[ -z "${new_password}" ]]; then
+  echo 'Missing new password.'; exit 1;
+fi;
+if [[ "${new_password}" != "${new_password2}" ]]; then
+  echo 'New password confirmation mistmatch.'; exit 1;
+fi;
+
+# Update password in all SSH keys.
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  ssh-keygen -p -f ~/.ssh/id_rsa"${_n}" -P "${old_password}" -N "${new_password}";
+done; unset _i _n;
+
+# Update SSH keys in macOS keychain.
+
+echo; # Extra line break.
+ssh-keys-update-keychain "${new_password}";

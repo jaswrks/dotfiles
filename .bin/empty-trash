@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Empty trash on all mounted volumes.
+
+sudo rm --recursive --force --verbose /Volumes/*/.Trashes/*;
+
+# Empty trash in the main HDD.
+
+sudo rm --recursive --force --verbose ~/.Trash/*;

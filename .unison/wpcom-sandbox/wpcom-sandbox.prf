@@ -1,0 +1,32 @@
+root = /users/jaswrks/projects/automattic/wpcom-sandbox
+root = ssh://wpcom-sandbox//home
+
+path = wpcom/public_html
+path = missioncontrol/public_html
+
+ignore = Path wpcom/public_html/wp-content/languages
+ignore = Path wpcom/public_html/bin/wp-cli/ci/behat
+
+ignore = Name .#*
+ignore = Name ._*
+ignore = Name .~*
+
+ignore = Name .idea
+ignore = Name .vscode
+ignore = Name *.nbproject
+ignore = Name *.code-workspace
+ignore = Name *.sublime-project
+ignore = Name *.sublime-workspace
+
+ignore = Name vendor
+ignore = Name node_modules
+ignore = Name .sass-cache
+
+ignore = Name *.tmp
+ignore = Name .git
+ignore = Name .svn
+ignore = Name Thumbs.db
+ignore = Name .FBCIndex
+ignore = Name .FBCLockFolder
+ignore = Name {.Trash*,.VolumeIcon.icns,.HSicon,Temporary*,.Temporary*,TheFindByContentFolder}
+ignore = Name {TheVolumeSettingsFolder,.Metadata,.filler,.idsff,.Spotlight,.DS_Store,.CFUserTextEncoding}

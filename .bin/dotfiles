@@ -1,0 +1,497 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Dotfiles CLI Tool.
+ *
+ * @since 2018-11-01
+ *
+ * @package Dotfiles
+ */
+
+declare( strict_types=1 );
+
+namespace Dotfiles;
+
+require_once dirname( __FILE__, 2 ) . '/.php/cli-bootstrap.php';
+
+/**
+ * Dotfiles CLI Tool.
+ *
+ * @since 2018-11-01
+ */
+class Dotfiles_CLI_Tool extends CLI_Tool {
+	/**
+	 * Current version.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	const VERSION = '0.0.2';
+
+	/**
+	 * Tool name.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	const NAME = 'Dotfiles CLI Tool';
+
+	/**
+	 * Dotfiles `home/`.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	protected $dotfiles_home;
+
+	/**
+	 * `~/` dir.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var string
+	 */
+	protected $home;
+
+	/**
+	 * Root directory symlinks.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var array
+	 */
+	protected $root_dir_symlinks;
+
+	/**
+	 * Exclusion patterns.
+	 *
+	 * @since 2020-12-06
+	 *
+	 * @var array
+	 */
+	protected $exclusion_patterns;
+
+	/**
+	 * Other symlinks.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var array
+	 */
+	protected $other_symlinks;
+
+	/**
+	 * Symlinks done.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var array
+	 */
+	protected $symlinks_done;
+
+	/**
+	 * Root dir symlinks done.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var array
+	 */
+	protected $root_dir_symlinks_done;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 2018-11-01
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->add_commands( [
+			'update' => [
+				'synopsis' => 'Updates files.',
+				'options'  => [
+					'backup'  => [
+						'description' => 'Do backups?',
+					],
+					'dry-run' => [
+						'description' => 'Dry run?',
+					],
+				],
+				'operands' => [],
+			],
+		] );
+
+		$this->dotfiles_home = dirname( __FILE__, 2 );
+		$this->home          = rtrim( $_SERVER['HOME'], '\\/' );
+
+		$this->root_dir_symlinks  = [
+			$this->dotfiles_home . '/.a8c',
+			$this->dotfiles_home . '/.aws',
+			$this->dotfiles_home . '/.bash',
+			$this->dotfiles_home . '/.bin',
+			$this->dotfiles_home . '/.libs',
+			$this->dotfiles_home . '/.php',
+			$this->dotfiles_home . '/.setup',
+			$this->dotfiles_home . '/.tpl.x',
+			$this->dotfiles_home . '/.zsh',
+		];
+		$this->exclusion_patterns = [
+			'#^dotfiles(-mac)?(?:/|$)#ui',
+			'#^\.git(?:change|ignore|attributes|modules)?(?:/|$)#ui',
+			'#^composer\.(json|lock)$#ui',
+			'#^\.npmignore$#ui',
+			'#^README\.md$#ui',
+			'#^\.libs(?:/|$)#ui',
+		];
+		$this->other_symlinks     = [
+			$this->dotfiles_home . '/.tpl.x/.gitconfig.x'             => $this->home . '/.gitconfig',
+			$this->dotfiles_home . '/.tpl.x/.gitignore.x'             => $this->home . '/.gitignore',
+			$this->dotfiles_home . '/.config/php/.ini'                => '/usr/local/etc/php/7.4/conf.d/z90.ini',
+			$this->dotfiles_home . '/.config/macos/key-bindings.dict' => $this->home . '/Library/KeyBindings/DefaultKeyBinding.dict',
+			$this->dotfiles_home . '/.config/vs-code/settings.json'   => $this->home . '/Library/Application Support/Code/User/settings.json',
+			$this->dotfiles_home . '/../dotfiles/.libs'               => $this->dotfiles_home . '/.libs',
+		];
+
+		$this->symlinks_done          = [];
+		$this->root_dir_symlinks_done = [];
+
+		$this->route_request();
+	}
+
+	/**
+	 * Updates files.
+	 *
+	 * @since 2018-11-01
+	 */
+	public function update() : void {
+		$this->update_files();
+		$this->do_root_dir_symlinks();
+		$this->do_file_symlinks();
+		$this->do_other_symlinks();
+	}
+
+	/**
+	 * Updates files.
+	 *
+	 * @since 2018-11-01
+	 */
+	protected function update_files() : void {
+		if ( $this->get_option( 'dry-run' ) ) {
+			return;
+		}
+
+		foreach ( [ 'dotfiles', 'dotfiles-mac' ] as $_basename ) {
+			passthru(
+				'if [[ -n "$(git status --short 2>/dev/null)" ]]; then' .
+				'	git add --all && git commit --message=update && git push;' .
+				'fi;',
+				$this->dotfiles_home . '/../' . $_basename
+			);
+			passthru( 'git fetch --all', $this->dotfiles_home . '/' . $_basename );
+
+			passthru(
+				'git --git-dir=' . quote_shell_arg( $this->dotfiles_home . '/' . $_basename ) .
+				' --work-tree=' . quote_shell_arg( $this->dotfiles_home ) .
+				' checkout origin/main --force'
+			);
+		}
+	}
+
+	/**
+	 * Does root directory symlinks.
+	 *
+	 * @since 2018-11-01
+	 */
+	protected function do_root_dir_symlinks() : void {
+		foreach ( scandir( $this->dotfiles_home ) as $_resource_sub_path_name ) {
+			$_dotfiles_home_resource_path = $this->dotfiles_home . '/' . $_resource_sub_path_name;
+			$_home_resource_path          = $this->home . '/' . $_resource_sub_path_name;
+
+			if ( in_array( $_resource_sub_path_name, [ '.', '..' ], true ) ) {
+				continue; // Not applicable.
+
+			} elseif ( ! is_dir( $_dotfiles_home_resource_path ) ) {
+				continue; // Not a directory.
+
+			} elseif ( is_link( $_dotfiles_home_resource_path ) ) {
+				$this->log( __FUNCTION__ . ': skipping is-link: `' . $_dotfiles_home_resource_path . '`' );
+				continue; // Link; i.e., a real directory.
+
+			} elseif ( false !== mb_strpos( $_resource_sub_path_name, '/' ) ) {
+				$this->log( __FUNCTION__ . ': skipping non-root: `' . $_resource_sub_path_name . '`' );
+				continue; // Not at root; i.e., a sub-dir.
+
+			} elseif ( $this->root_dir_symlinks && ! in_cistr_array( $_dotfiles_home_resource_path, $this->root_dir_symlinks, true ) ) {
+				$this->log( __FUNCTION__ . ': skipping not-included: `' . $_dotfiles_home_resource_path . '`' );
+				continue; // Not in the list of root directory symlinks.
+
+			} elseif ( $this->other_symlinks && in_cistr_array( $_home_resource_path, $this->other_symlinks, true ) ) {
+				$this->log( __FUNCTION__ . ': skipping other-conflict: `' . $_home_resource_path . '`' );
+				continue; // Handled by {@see do_other_symlinks()}.
+
+			} elseif ( $this->is_symlink_excluded( $_dotfiles_home_resource_path ) ) {
+				$this->log( __FUNCTION__ . ': skipping exclusion: `' . $_dotfiles_home_resource_path . '` → `' . $_home_resource_path . '`' );
+				continue; // A conflicting symlink has already been done.
+
+			} elseif ( $this->is_symlink_done( $_dotfiles_home_resource_path, $_home_resource_path ) ) {
+				$this->log( __FUNCTION__ . ': skipping done-conflict: `' . $_dotfiles_home_resource_path . '` → `' . $_home_resource_path . '`' );
+				continue; // A conflicting symlink has already been done.
+			}
+
+			if ( ! $this->get_option( 'dry-run' ) ) {
+				if ( ! $this->do_symlink( $_dotfiles_home_resource_path, $_home_resource_path ) ) {
+					$this->error( __FUNCTION__ . ': Unable to link: `' . $_home_resource_path . '` to `' . $_dotfiles_home_resource_path . '`.' );
+					$this->exit_status( 1 );
+				}
+			}
+			$this->symlinks_done[]          = [
+				'target' => $_dotfiles_home_resource_path,
+				'link'   => $_home_resource_path,
+			];
+			$this->root_dir_symlinks_done[] = [
+				'target' => $_dotfiles_home_resource_path,
+				'link'   => $_home_resource_path,
+			];
+			$this->success( 'Linked: `' . $_home_resource_path . '` to `' . $_dotfiles_home_resource_path . '`' . "\n" );
+		}
+		unset( $_resource_sub_path_name, $_dotfiles_home_resource_path, $_home_resource_path );
+	}
+
+	/**
+	 * Does file symlinks.
+	 *
+	 * @since 2018-11-01
+	 */
+	protected function do_file_symlinks() : void {
+		$regex     = $this->dir_regex_exclude_root_dir_symlinks();
+		$resources = dir_regex_iterator( $this->dotfiles_home, $regex );
+
+		foreach ( $resources as $_resource ) {
+			$_resource_type          = $_resource->getType();
+			$_resource_sub_path_name = $_resource->getSubpathname();
+
+			$_dotfiles_home_resource_path = $this->dotfiles_home . '/' . $_resource_sub_path_name;
+			$_home_resource_path          = $this->home . '/' . $_resource_sub_path_name;
+
+			if ( 'file' !== $_resource_type ) {
+				continue; // Not a real file.
+
+			} elseif ( $this->root_dir_symlinks && in_cistr_array( $_dotfiles_home_resource_path, $this->root_dir_symlinks, true ) ) {
+				$this->log( __FUNCTION__ . ': skipping root-dir-conflict: `' . $_dotfiles_home_resource_path . '`' );
+				continue; // Handled by {@see do_root_dir_symlinks()}.
+
+			} elseif ( $this->other_symlinks && in_cistr_array( $_home_resource_path, $this->other_symlinks, true ) ) {
+				$this->log( __FUNCTION__ . ': skipping other-conflict: `' . $_home_resource_path . '`' );
+				continue; // Handled by {@see do_other_symlinks()}.
+
+			} elseif ( $this->is_symlink_excluded( $_dotfiles_home_resource_path ) ) {
+				$this->log( __FUNCTION__ . ': skipping exclusion: `' . $_dotfiles_home_resource_path . '` → `' . $_home_resource_path . '`' );
+				continue; // A conflicting symlink has already been done.
+
+			} elseif ( $this->is_symlink_done( $_dotfiles_home_resource_path, $_home_resource_path ) ) {
+				$this->log( __FUNCTION__ . ': skipping done-conflict: `' . $_dotfiles_home_resource_path . '` → `' . $_home_resource_path . '`' );
+				continue; // A conflicting symlink has already been done.
+			}
+
+			if ( ! $this->get_option( 'dry-run' ) ) {
+				if ( ! $this->do_symlink( $_dotfiles_home_resource_path, $_home_resource_path ) ) {
+					$this->error( __FUNCTION__ . ': Unable to link: `' . $_home_resource_path . '` to `' . $_dotfiles_home_resource_path . '`.' );
+					$this->exit_status( 1 );
+				}
+			}
+			$this->symlinks_done[] = [
+				'target' => $_dotfiles_home_resource_path,
+				'link'   => $_home_resource_path,
+			];
+			$this->success( 'Linked: `' . $_home_resource_path . '` to `' . $_dotfiles_home_resource_path . '`' . "\n" );
+		}
+		unset( $_resource, $_resource_type, $_resource_sub_path_name, $_dotfiles_home_resource_path, $_home_resource_path );
+	}
+
+	/**
+	 * Does other symlinks.
+	 *
+	 * @since 2018-11-01
+	 */
+	protected function do_other_symlinks() : void {
+		foreach ( $this->other_symlinks as $_target => $_link ) {
+			if ( ! $_target || ! file_exists( $_target ) || ! $_link ) {
+				continue; // Invalid `$_target` → `$_link`.
+
+			} elseif ( $this->is_symlink_done( $_target, $_link ) ) {
+				$this->log( __FUNCTION__ . ': skipping done-conflict: `' . $_target . '` → `' . $_link . '`' );
+				continue; // A conflicting symlink has already been done.
+			}
+
+			if ( ! $this->get_option( 'dry-run' ) ) {
+				if ( ! $this->do_symlink( $_target, $_link ) ) {
+					$this->error( __FUNCTION__ . ': Unable to link: `' . $_link . '` to `' . $_target . '`.' );
+					$this->exit_status( 1 );
+				}
+			}
+			$this->symlinks_done[] = [
+				'target' => $_target,
+				'link'   => $_link,
+			];
+			$this->success( 'Linked: `' . $_link . '` to `' . $_target . '`' . "\n" );
+		}
+		unset( $_target, $_link ); // Housekeeping.
+	}
+
+	/**
+	 * Creates a symlink.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @param  string $target Target.
+	 * @param  string $link   Symlink path.
+	 *
+	 * @return bool           True if created successfully.
+	 */
+	protected function do_symlink( string $target, string $link ) : bool {
+		if ( $this->get_option( 'dry-run' ) ) {
+			return true;
+		}
+		$this->maybe_handle_symlink_backup( $link );
+
+		if ( file_exists( $target ) ) {
+			if ( ! is_dir( dirname( $link ) ) && ! mkdir( dirname( $link ), 0755, true ) ) {
+				$this->error( __FUNCTION__ . ': Unable to mkdir: `' . dirname( $link ) . '`.' );
+				$this->exit_status( 1 );
+			}
+			\passthru(
+				'/usr/local/opt/coreutils/libexec/gnubin/ln' .
+				' --symbolic --force --no-target-directory' .
+				' ' . quote_shell_arg( $target ) . ' ' . quote_shell_arg( $link ),
+				$status
+			);
+		}
+		return (int) ( $status ?? 1 ) === 0;
+	}
+
+	/**
+	 * Handles symlink backups.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @param string $path Path to backup.
+	 */
+	protected function maybe_handle_symlink_backup( string $path ) : void {
+		// Remove any existing backup file.
+		if ( is_file( $path . '~' ) || is_link( $path . '~' ) ) {
+			if ( ! $this->get_option( 'dry-run' ) ) {
+				if ( ! unlink( $path . '~' ) ) {
+					$this->error( 'Unable to unlink: `' . $path . '`~.' );
+					$this->exit_status( 1 );
+				}
+			}
+			$this->log( 'Unlinking backup: `' . $path . '~`' );
+
+		} elseif ( is_dir( $path . '~' ) ) {
+			if ( ! $this->get_option( 'dry-run' ) ) {
+				if ( ! rm_dir( $path . '~', true ) ) {
+					$this->error( 'Unable to remove: `' . $path . '~`.' );
+					$this->exit_status( 1 );
+				}
+			}
+			$this->log( 'Removing backup: `' . $path . '~`' );
+		}
+
+		// Now, do we backup or delete?
+		if ( file_exists( $path ) ) {
+			if ( $this->get_option( 'backup' ) ) {
+				if ( ! $this->get_option( 'dry-run' ) ) {
+					if ( ! rename( $path, $path . '~' ) ) {
+						$this->error( 'Unable to rename: `' . $path . '` to `' . $path . '~`.' );
+						$this->exit_status( 1 );
+					}
+				}
+				$this->log( 'Creating backup: `' . $path . '~`' );
+
+			} elseif ( is_file( $path ) || is_link( $path ) ) {
+				if ( ! $this->get_option( 'dry-run' ) ) {
+					if ( ! unlink( $path ) ) {
+						$this->error( 'Unable to unlink: `' . $path . '`.' );
+						$this->exit_status( 1 );
+					}
+				}
+				$this->log( 'Unlinking existing: `' . $path . '`' );
+
+			} elseif ( is_dir( $path ) ) {
+				if ( ! $this->get_option( 'dry-run' ) ) {
+					if ( ! rm_dir( $path, true ) ) {
+						$this->error( 'Unable to remove: `' . $path . '`.' );
+						$this->exit_status( 1 );
+					}
+				}
+				$this->log( 'Removing existing: `' . $path . '`' );
+			}
+		}
+	}
+
+	/**
+	 * Regex that excludes root dir_symlinks.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @return string Regex that excludes root dir_symlinks.
+	 */
+	protected function dir_regex_exclude_root_dir_symlinks() : string {
+		$esc_regex          = __NAMESPACE__ . '\\esc_regex';
+		$root_dir_symlinks  = array_merge( $this->root_dir_symlinks, array_column( $this->root_dir_symlinks_done, 'target' ) );
+		$root_dir_basenames = array_unique( array_map( 'basename', $root_dir_symlinks ) );
+
+		if ( $root_dir_basenames ) {
+			return '/^' .
+				'(?!' .
+					esc_regex( $this->dotfiles_home ) . '\/' .
+					'(?:' . implode( '|', array_map( $esc_regex, $root_dir_basenames ) ) . ')(?:\/|$)' .
+				')' .
+				'.+$/ui';
+		} else {
+			return '/.+/u';
+		}
+	}
+
+	/**
+	 * Symlink is excluded?
+	 *
+	 * @since 2020-12-06
+	 *
+	 * @param  string $target Target.
+	 *
+	 * @return bool           True if excluded.
+	 */
+	protected function is_symlink_excluded( string $target ) : bool {
+		$target_sub_path = preg_replace( '/^' . esc_regex( $this->dotfiles_home ) . '(?:\/|$)/ui', '', $target );
+
+		foreach ( $this->exclusion_patterns as $_pattern ) {
+			if ( $_pattern && $target_sub_path && preg_match( $_pattern, $target_sub_path ) ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Symlink is done already?
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @param  string $target Target.
+	 * @param  string $link   Symlink path.
+	 *
+	 * @return bool           True if done already.
+	 */
+	protected function is_symlink_done( string $target, string $link ) : bool {
+		return (bool) array_filter( $this->symlinks_done, function( $done ) use ( $target, $link ) {
+			return ( mb_strtolower( $target ) === mb_strtolower( $done['target'] ) || 0 === mb_stripos( $target, $done['target'] . '/' ) )
+					&& ( mb_strtolower( $link ) === mb_strtolower( $done['link'] ) || 0 === mb_stripos( $link, $done['link'] . '/' ) );
+		} );
+	}
+}
+
+new Dotfiles_CLI_Tool();

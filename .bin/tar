@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# `tar` wrapper.
+
+if can-run gtar; then
+	gtar "${@}"; # GNU flavor.
+else
+	:: tar "${@}";
+fi;

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Empty snagit, tmp, and trash.
+
+empty-tmp && empty-trash;
+
+# Clear system logs to improve shell startup speed.
+
+sudo rm --recursive --force --verbose /private/var/log/asl/*.asl;
+
+# Remove useless files.
+
+rm-arc-ros ~/;
+rm-ds-stores ~/;
+
+# Cleanup Homebrew.
+
+brew cleanup;

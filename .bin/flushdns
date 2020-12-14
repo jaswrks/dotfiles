@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Always run as root user.
+
+if [[ "$(whoami)" != root ]]; then
+	sudo ~/.bin/flushdns "${@}"; exit 0;
+fi;
+
+# Flush DNS cache.
+dscacheutil -flushcache;
+killall -HUP mDNSResponder; sleep 2;
+brew services restart dnsmasq;
+
+# Clear Chrome's DNS cache.
+osascript <<EOD
+	tell application "Google Chrome"
+		tell front window
+
+		set curTab to active tab index
+
+		set dnsTab to make new tab with properties {URL:"chrome://net-internals/#dns"}
+		set dnsTabReady to not loading of dnsTab
+
+		repeat until dnsTabReady
+			set dnsTabReady to not loading of dnsTab
+		end repeat
+
+		execute dnsTab javascript "
+			document.getElementById('dns-view-clear-cache').click();
+			document.getElementById('sockets-view-flush-button').click();
+		"
+		close dnsTab
+		set active tab index to curTab
+
+		end tell
+	end tell
+EOD

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# shellcheck disable=SC2002
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Validate.
+
+file="${1}";
+
+if [[ -z "${file}" || ! -f "${file}" ]]; then
+	echo 'Expecting an input file path.';
+	exit 1; # Error status.
+fi;
+
+# Compute SRI hash for input file.
+# See: <https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity>
+
+hash=sha384-"$(cat "${file}" | openssl dgst -sha384 -binary | openssl enc -base64 -A)";
+echo -n "${hash}" | pbcopy; echo "${hash}";
+echo 'Copied to clipboard.';

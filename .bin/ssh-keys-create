@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Collect password.
+
+if [[ -n "${1:-}" ]]; then
+  password="${1}";
+else
+  read -rs -p 'Password: ' password && echo -e '\n';
+fi;
+
+if [[ -z "${password}" ]]; then
+  echo 'Missing password.'; exit 1;
+fi;
+
+# Create SSH keys w/ password.
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  [[ "${_i}" -lt 2 ]] && _c='' || _c="(${_i})";
+  ssh-keygen -t rsa -b 2048 -P "${password}" -f ~/.ssh/id_rsa"${_n}" -C "${USER}${_c}";
+done; unset _i _n _c;
+
+# Create SSH keys w/o password.
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  [[ "${_i}" -lt 2 ]] && _c='' || _c="(np:${_i})";
+  ssh-keygen -t rsa -b 2048 -P '' -f ~/.ssh/id_rsa_np"${_n}" -C "${USER}${_c}";
+done; unset _i _n _c;
+
+# Create bot SSH keys w/o password.
+
+ssh-keygen -t rsa -b 2048 -P '' -f ~/.ssh/jas-bot-np -C 'jas-bot(np)';
+ssh-keygen -t rsa -b 2048 -P '' -f ~/.ssh/jas-bot-dk-np -C 'jas-bot(dk-np)';
+
+ssh-keygen -t rsa -b 2048 -P '' -f ~/.ssh/w4s-bot-np -C 'w4s-bot(np)';
+ssh-keygen -t rsa -b 2048 -P '' -f ~/.ssh/w4s-bot-dk-np -C 'w4s-bot(dk-np)';
+
+# Concatenate authorized public SSH keys.
+
+echo '' > ~/.ssh/authorized_keys;
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  cat ~/.ssh/id_rsa"${_n}".pub >> ~/.ssh/authorized_keys;
+done; unset _i _n;
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  cat ~/.ssh/id_rsa_np"${_n}".pub >> ~/.ssh/authorized_keys;
+done; unset _i _n;
+
+# Update SSH keys in macOS keychain.
+
+echo; # Extra line break.
+ssh-keys-update-keychain "${password}";

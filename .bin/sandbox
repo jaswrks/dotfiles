@@ -1,0 +1,502 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Sandbox CLI Tool.
+ *
+ * @since 2018-04-29
+ *
+ * @package Dotfiles
+ */
+declare( strict_types=1 );
+
+namespace Dotfiles;
+
+require_once dirname( __FILE__, 2 ) . '/.php/cli-bootstrap.php';
+
+/**
+ * Sandbox CLI Tool.
+ *
+ * @since 2018-04-29
+ */
+class Sandbox_CLI_Tool extends CLI_Tool {
+	/**
+	 * Current version.
+	 *
+	 * @since 2018-04-29
+	 *
+	 * @var string
+	 */
+	public const VERSION = '0.0.1';
+
+	/**
+	 * Tool name.
+	 *
+	 * @since 2018-04-29
+	 *
+	 * @var string
+	 */
+	public const NAME = 'Sandbox CLI Tool';
+
+	/**
+	 * Sandbox file path.
+	 *
+	 * @since 2018-04-29
+	 *
+	 * @var string
+	 */
+	protected const FILE = '/etc/hosts.sandbox';
+
+	/**
+	 * WPCOM sandbox IPv4.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @var string
+	 */
+	protected const WPCOM_SANDBOX_IPV4 = '192.0.93.102';
+
+	/**
+	 * WPCOM sandbox IPv6.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @var string
+	 */
+	protected const WPCOM_SANDBOX_IPV6 = '0:0:0:0:0:ffff:c000:5d66';
+
+	/**
+	 * Refer sandbox IPv4.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @var string
+	 */
+	protected const REFER_SANDBOX_IPV4 = '192.0.83.56';
+
+	/**
+	 * Refer sandbox IPv6.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @var string
+	 */
+	protected const REFER_SANDBOX_IPV6 = '0:0:0:0:0:ffff:c000:5338';
+
+	/**
+	 * Host expansions.
+	 *
+	 * @since 2019-01-31
+	 *
+	 * @var array
+	 */
+	protected $host_expansions;
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 2018-04-29
+	 */
+	public function __construct() {
+		parent::__construct();
+
+		$this->host_expansions = [
+			'wpcom' => [
+				's0.wp.com',
+				's1.wp.com',
+				's2.wp.com',
+
+				'automattic.com',
+				'wordpress.com',
+				'automattic.wordpress.com',
+
+				'blog.wordpress.com',
+				'dailypost.wordpress.com',
+				'discover.wordpress.com',
+				'forums.wordpress.com',
+				'learn.wordpress.com',
+				'support.wordpress.com',
+				'developer.wordpress.com',
+				'wpgo.wordpress.com',
+
+				'jetpack.com',
+				'jetpackme.wordpress.com',
+
+				'longreads.com',
+				'longreadsblog.wordpress.com',
+
+				'dev-mc.a8c.com',
+				'public-api.wordpress.com',
+
+				'martechp2.wordpress.com',
+				'h4tests.wordpress.com',
+			],
+		];
+
+		foreach ( [
+			'ar',
+			'br',
+			'de',
+			'el',
+			'en',
+			'es',
+			'fr',
+			'he',
+			'id',
+			'it',
+			'ja',
+			'ko',
+			'nl',
+			'pt',
+			'ro',
+			'ru',
+			'sv',
+			'tr',
+			'zh-cn',
+			'zh-tw',
+		] as $_local_subdomain ) {
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.go.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.blog.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.forums.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.support.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . 'wpgo.wordpress.com';
+			$this->host_expansions['wpcom'][] = $_local_subdomain . '.jetpack.com';
+		}
+
+		$this->add_commands( [
+			'ls'     => [
+				'synopsis' => 'Lists sandboxed hosts.',
+				'options'  => [],
+				'operands' => [],
+			],
+			'add'    => [
+				'synopsis' => 'Adds hosts to the sandbox.',
+				'options'  => [
+					'ipv' => [
+						'optional'    => true,
+						'description' => 'IPv4 or IPv6?',
+					],
+				],
+				'operands' => [
+					'host' => [
+						'required'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+			'rm'     => [
+				'synopsis' => 'Removes hosts from the sandbox.',
+				'options'  => [],
+				'operands' => [
+					'host' => [
+						'required'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+			'chrome' => [
+				'synopsis' => 'Sandboxes only the hosts given, in Chrome.',
+				'options'  => [
+					'ipv'      => [
+						'optional'    => true,
+						'description' => 'IPv4 or IPv6?',
+					],
+					'canary'   => [
+						'description' => 'In Canary?',
+					],
+					'chromium' => [
+						'description' => 'In Chromium?',
+					],
+				],
+				'operands' => [
+					'host' => [
+						'required'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+			'only'   => [
+				'synopsis' => 'Sandboxes only the hosts given.',
+				'options'  => [
+					'ipv' => [
+						'optional'    => true,
+						'description' => 'IPv4 or IPv6?',
+					],
+				],
+				'operands' => [
+					'host' => [
+						'required'  => true,
+						'multiple'  => true,
+						'validator' => '__not_empty',
+					],
+				],
+			],
+			'empty'  => [
+				'synopsis' => 'Empties the sandbox.',
+				'options'  => [],
+				'operands' => [],
+			],
+		] );
+
+		$this->route_request();
+	}
+
+	/**
+	 * Flush DNS cache.
+	 */
+	protected function flushdns() : void {
+		run( 'flushdns 1> /dev/null' );
+	}
+
+	/**
+	 * Translates a hostname into an IPv4 address.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @param  string $host Hostname.
+	 *
+	 * @return string       IPv4 address.
+	 */
+	protected function ipv4( string $host ) : string {
+		if ( 'refer.wordpress.com' === $host ) {
+			return $this::REFER_SANDBOX_IPV4;
+		} else {
+			return $this::WPCOM_SANDBOX_IPV4;
+		}
+	}
+
+	/**
+	 * Translates a hostname into an IPv6 address.
+	 *
+	 * @since 2019-01-14
+	 *
+	 * @param  string $host Hostname.
+	 *
+	 * @return string       IPv6 address.
+	 */
+	protected function ipv6( string $host ) : string {
+		if ( 'refer.wordpress.com' === $host ) {
+			return $this::REFER_SANDBOX_IPV6;
+		} else {
+			return $this::WPCOM_SANDBOX_IPV6;
+		}
+	}
+
+	/**
+	 * Gets sandbox.
+	 *
+	 * @return array Sandbox.
+	 */
+	protected function get() : array {
+		$sandbox  = [];
+		$contents = '';
+
+		if ( is_file( $this::FILE ) ) {
+			$contents = file_get_contents( $this::FILE );
+			$contents = trim( mb_strtolower( $contents ) );
+		}
+
+		$lines = preg_split( '/\v+/u', $contents );
+		$lines = remove_emptys( trim( $lines ) );
+
+		foreach ( $lines as $_line ) {
+			if ( preg_match( '/^\h*(?<ip>[a-f0-9:.]+)\h+(?<host>[a-z0-9\-.]+)\h*$/u', $_line, $_m ) ) {
+				$sandbox[ $_m['host'] ]   = $sandbox[ $_m['host'] ] ?? [];
+				$sandbox[ $_m['host'] ][] = $_m['ip'];
+			}
+		}
+
+		return $sandbox;
+	}
+
+	/**
+	 * Gets operand hosts.
+	 *
+	 * @return array All hosts.
+	 */
+	protected function hosts() : array {
+		$hosts = []; // Initialize.
+
+		$_hosts = $this->get_operand( 'host' );
+		$_hosts = remove_emptys( trim( $_hosts ) );
+
+		foreach ( $_hosts as $_host ) {
+			if ( ! empty( $this->host_expansions[ $_host ] ) ) {
+				$hosts = array_merge( $hosts, $this->host_expansions[ $_host ] );
+			} else {
+				$hosts[] = $_host;
+			}
+		}
+
+		$hosts = array_map( 'mb_strtolower', $hosts );
+		$hosts = array_unique( $hosts );
+
+		return $hosts;
+	}
+
+	/**
+	 * Lists sandboxed hosts.
+	 *
+	 * @since 2018-04-29
+	 */
+	protected function ls() : void {
+		$contents = '';
+
+		foreach ( $this->get() as $_host => $_ips ) {
+			foreach ( $_ips as $_ip ) {
+				$contents .= $contents ? "\n" : '';
+				$contents .= sprintf( '%s %s', $_ip, $_host );
+			}
+		}
+
+		$this->log( $contents ?: '<empty>', 'blue' );
+	}
+
+	/**
+	 * Adds hosts to the sandbox.
+	 *
+	 * @since 2018-04-29
+	 */
+	protected function add() : void {
+		$sandbox = $this->get();
+		$ipv     = $this->get_option( 'ipv' );
+
+		foreach ( $this->hosts() as $_host ) {
+			$_ipv4 = $this->ipv4( $_host );
+			$_ipv6 = $this->ipv6( $_host );
+
+			if ( '4' === $ipv ) {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv4 ] );
+			} elseif ( '6' === $ipv ) {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv6 ] );
+			} else {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv4, $_ipv6 ] );
+			}
+
+			foreach ( $sandbox[ $_host ] as $_ip ) {
+				$this->log( sprintf( '+ %s %s', $_ip, $_host ), 'light-green' );
+			}
+		}
+
+		$this->update( $sandbox );
+		$this->flushdns();
+	}
+
+	/**
+	 * Updates sandbox.
+	 *
+	 * @param array $sandbox Sandbox.
+	 */
+	protected function update( array $sandbox ) : void {
+		$contents = '';
+
+		foreach ( $sandbox as $_host => $_ips ) {
+			foreach ( $_ips as $_ip ) {
+				$contents .= $contents ? "\n" : '';
+				$contents .= $_ip . ' ' . $_host;
+			}
+		}
+
+		file_put_contents( $this::FILE, $contents . "\n" );
+	}
+
+	/**
+	 * Removes hosts from the sandbox.
+	 *
+	 * @since 2018-04-30
+	 */
+	protected function rm() : void {
+		$sandbox = $this->get();
+
+		foreach ( $this->hosts() as $_host ) {
+			if ( isset( $sandbox[ $_host ] ) ) {
+				$_ips = $sandbox[ $_host ];
+				unset( $sandbox[ $_host ] );
+
+				foreach ( $_ips as $_ip ) {
+					$this->log( sprintf( '- %s %s', $_ip, $_host ), 'light-green' );
+				}
+			}
+		}
+
+		$this->update( $sandbox );
+		$this->flushdns();
+	}
+
+	/**
+	 * Sandboxes Chrome.
+	 *
+	 * @since 2019-12-31
+	 */
+	protected function chrome() : void {
+		$sandbox    = [];
+		$host_rules = '';
+		$ipv        = $this->get_option( 'ipv' );
+
+		$canary   = $this->get_option( 'canary' );
+		$chromium = $this->get_option( 'chromium' );
+
+		foreach ( $this->hosts() as $_host ) {
+			$_ipv4 = $this->ipv4( $_host );
+			$_ipv6 = $this->ipv6( $_host );
+
+			if ( '4' === $ipv ) {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv4 ] );
+			} elseif ( '6' === $ipv ) {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv6 ] );
+			} else {
+				$sandbox[ $_host ] = remove_emptys( [ $_ipv4 ] );
+			}
+
+			foreach ( $sandbox[ $_host ] as $_ip ) {
+				$host_rules .= ', MAP ' . $_host . ' ' . $_ip;
+				$this->log( sprintf( '+ %s %s', $_ip, $_host ), 'light-green' );
+			}
+		}
+		$host_rules = trim( $host_rules, ', ' );
+
+		$app_name      = 'Google Chrome';
+		$user_data_dir = home_dir( '/Library/Application Support/Google/Chrome Sandbox' );
+
+		if ( $canary ) {
+			$app_name      = 'Google Chrome Canary';
+			$user_data_dir = home_dir( '/Library/Application Support/Google/Chrome Canary Sandbox' );
+		} elseif ( $chromium ) {
+			$app_name      = 'Chromium';
+			$user_data_dir = home_dir( '/Library/Application Support/Google/Chromium Sandbox' );
+		}
+
+		$app_cmd_args = 'open -na ' . quote_shell_arg( $app_name ) . ' --args' .
+			' --user-data-dir=' . quote_shell_arg( $user_data_dir ) .
+			' --host-rules=' . quote_shell_arg( $host_rules ) .
+			' --ignore-certificate-errors';
+
+		$this->log( $app_cmd_args, 'light-blue' );
+		run( $app_cmd_args );
+	}
+
+	/**
+	 * Sandboxes only the hosts given.
+	 *
+	 * @since 2018-04-29
+	 */
+	protected function only() : void {
+		$this->update( [] );
+		$this->add();
+	}
+
+	/**
+	 * Empties the sandbox.
+	 *
+	 * @since 2018-04-30
+	 */
+	protected function empty() : void {
+		$this->update( [] );
+		$this->flushdns();
+	}
+}
+
+new Sandbox_CLI_Tool();

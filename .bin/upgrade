@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Upgrade OS libraries/software.
+
+sudo softwareupdate --install --recommended;
+
+# Upgrade Homebrew & all packages.
+
+brew update;
+brew upgrade;
+brew cask upgrade;
+brew prune;
+
+# Upgrade Node packages.
+
+npm update -g;
+
+# Upgrade Ruby Gems.
+
+gem update;
+
+# Upgrade Pip packages.
+
+pip3 freeze --local | grep -Pv '^(?:\-e|vboxapi\=)' | cut -d = -f 1 | xargs -n1 pip3 install -U;
+
+# Upgrade Vagrant plugins.
+
+vagrant plugin update;
+
+# Signal completion.
+
+echo '---- Upgrade Complete! ----';

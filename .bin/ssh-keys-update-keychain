@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Collect password.
+
+if [[ -n "${1:-}" ]]; then
+  password="${1}";
+else
+  read -rs -p 'Password: ' password && echo -e '\n';
+fi;
+
+if [[ -z "${password}" ]]; then
+  echo 'Missing password.'; exit 1;
+fi;
+
+# Delete SSH keys from macOS keychain.
+
+echo -e 'Removing existing SSH keys from keychain:\n';
+
+for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  if [[ -x /usr/bin/ssh-add ]]; then
+    /usr/bin/ssh-add -K -d ~/.ssh/id_rsa"${_n}" || true;
+  else
+    ssh-add -K -d ~/.ssh/id_rsa"${_n}" || true;
+  fi;
+done; unset _i _n;
+
+# Add SSH keys back into macOS keychain.
+
+echo -e '\nAdding SSH keys back into keychain with password given:';
+
+_home=~; for _i in {1..10}; do
+  [[ "${_i}" -lt 2 ]] && _n='' || _n="${_i}";
+  echo && expect -c 'spawn /usr/bin/ssh-add -K '"${_home}"'/.ssh/id_rsa'"${_n}"';
+    expect "Enter passphrase for '"${_home}"'/.ssh/id_rsa'"${_n}"':"; send "'"${password}"'\n";
+    expect "Identity added: '"${_home}"'/.ssh/id_rsa'"${_n}"' ('"${_home}"'/.ssh/id_rsa'"${_n}"')";
+    interact;';
+done; unset _i _n;
