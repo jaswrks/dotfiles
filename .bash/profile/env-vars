@@ -10,9 +10,6 @@ export LC_ALL=en_US.UTF-8;
 export CDPATH=.\
 :~\
 :~/projects\
-:~/projects/jaswrks\
-:~/projects/metagators\
-:~/projects/automattic\
 :~/tmp;
 
 # Default text editor.
