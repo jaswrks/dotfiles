@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Include bootstrap.
+# Include can-run function.
 
-. ~/.bash/bootstrap;
+. ~/.bash/funcs/can-run;
 
 # `grep` wrapper.
 
