@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
 # `grep` wrapper.
 
 if can-run ggrep; then
