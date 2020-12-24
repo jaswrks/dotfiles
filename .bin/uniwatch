@@ -16,7 +16,7 @@ while [[ $# -gt 0 ]]; do
       shift;
       ;;
     --ask-no-questions)
-      ask_no_questions='-batch';
+      ask_no_questions='1';
       shift;
       ;;
     *)
@@ -35,4 +35,8 @@ fi;
 
 # Run commands.
 
-UNISON="${local_unison_dir}" unison "${ask_no_questions}" -repeat watch "${remote_ssh_handle}" || true;
+if [[ -n "${ask_no_questions}" ]]; then
+  UNISON="${local_unison_dir}" unison -batch -repeat watch "${remote_ssh_handle}" || true;
+else
+  UNISON="${local_unison_dir}" unison -repeat watch "${remote_ssh_handle}" || true;
+fi;
