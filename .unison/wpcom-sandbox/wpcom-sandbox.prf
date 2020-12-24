@@ -1,4 +1,4 @@
-root = /users/jaswrks/projects/automattic/wpcom-sandbox
+root = /users/jason/projects/automattic/wpcom-sandbox
 root = ssh://wpcom-sandbox//home
 
 path = wpcom/public_html
