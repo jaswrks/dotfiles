@@ -34,5 +34,5 @@ if [[ -z "${remote_ssh_handle}" || ! -f "${local_unison_prf}" ]]; then
 fi;
 
 # Run commands.
-
+echo "${local_unison_dir}"; exit;
 UNISON="${local_unison_dir}" unison "${ask_no_questions}" -repeat watch "${remote_ssh_handle}" || true;
