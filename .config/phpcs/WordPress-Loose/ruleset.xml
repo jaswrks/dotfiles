@@ -31,6 +31,7 @@
     <exclude name="WordPress.Files.FileName.InvalidClassFileName" />
     <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
 
+    <exclude name="WordPress.DateTime.RestrictedFunctions.date_date" />
     <exclude name="WordPress.WP.AlternativeFunctions.json_encode_json_encode" />
 
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
