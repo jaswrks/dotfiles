@@ -1,12 +1,12 @@
 {
-	"plugins": [ "prettier" ],
-	"extends": [ "plugin:prettier/recommended" ],
+	"plugins": ["prettier"],
+	"extends": ["plugin:prettier/recommended"],
 
 	"parserOptions": {
 		"ecmaVersion": 2019
 	},
 	"rules": {
-		"prettier/prettier": [ "warn" ],
+		"prettier/prettier": ["warn"],
 		"space-unary-ops": [
 			"warn",
 			{
@@ -20,9 +20,10 @@
 				}
 			}
 		],
-		"space-in-parens": [ "warn", "always" ],
-		"array-bracket-spacing": [ "warn", "always" ],
-		"object-curly-spacing": [ "warn", "always" ],
-		"computed-property-spacing": [ "warn", "always" ]
+		"space-in-parens": ["warn", "always"],
+		"array-bracket-spacing": ["warn", "always"],
+		"object-curly-spacing": ["warn", "always"],
+		"computed-property-spacing": ["warn", "always"],
+		"newline-per-chained-call": ["error", { "ignoreChainWithDepth": 5 }]
 	}
 }
