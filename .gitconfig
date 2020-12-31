@@ -3,6 +3,8 @@
   email = jaswrks@o5p.me
   url = https://jaswrks.com
   signingkey = D6125FF6
+[init]
+  defaultBranch = main
 [commit]
   gpgsign = true
 [core]

@@ -2,6 +2,8 @@
 	name = Jason Caldwell
 	email = jaswrks@o5p.me
   url = https://jaswrks.com
+[init]
+  defaultBranch = main
 [core]
   eol = lf
   autocrlf = input
