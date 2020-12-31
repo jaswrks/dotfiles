@@ -485,7 +485,9 @@
 	"files.trimFinalNewlines": true,
 
 	"search.exclude": {
+		"**/vendor": true,
 		"**/node_modules": true,
+		"**/jspm_packages": true,
 		"**/bower_components": true
 	},
 	"search.useIgnoreFiles": true,
