@@ -90,7 +90,7 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
 
 	# Add python utility paths.
 
-	brew_prefix_python=/usr/local/opt/python@2;
+	brew_prefix_python=/usr/local/opt/python@3.9;
 	PRE_PATH="${PRE_PATH}${brew_prefix_python}"/libexec/bin:;
 	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_python}"/share/man:;
 

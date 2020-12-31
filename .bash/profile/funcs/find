@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Find utils.
+
+function find() {
+  if can-run gfind; then
+    gfind "${@}"; # GNU flavor.
+  else
+    :: find "${@}";
+  fi;
+};

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# Tar utils.
+
+function tar() {
+  if can-run gtar; then
+    gtar "${@}"; # GNU flavor.
+  else
+    :: tar "${@}";
+  fi;
+};
