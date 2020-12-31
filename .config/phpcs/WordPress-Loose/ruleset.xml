@@ -38,6 +38,7 @@
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_var_export" />
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_error_log" />
+    <exclude name="WordPress.PHP.DevelopmentFunctions.prevent_path_disclosure_phpinfo" />
 
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_proc_open" />
