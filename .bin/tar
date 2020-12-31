@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Include bootstrap.
+# Include command utils.
 
-. ~/.bash/bootstrap;
+. ~/.bash/funcs/::;
 
 # Tar command.
 
