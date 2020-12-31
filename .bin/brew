@@ -11,4 +11,8 @@ export MANPATH=''; # Initialize.
 export NODE_PATH=''; # Initialize.
 eval "$(/usr/libexec/path_helper -s)";
 
+PATH=/usr/local/sbin:"${PATH}";
+PATH=/usr/local/bin:"${PATH}";
+MANPATH=/usr/local/share/man:"${MANPATH}";
+
 :: brew "${@}";

@@ -30,7 +30,7 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
 	PRE_MANPATH='';
 	PRE_NODE_PATH='';
 
-	# Add me.
+	# Add my bin dirs.
 
 	PRE_PATH="${PRE_PATH}"~/.bin:;
 	PRE_PATH="${PRE_PATH}"~/.bin/git:;
