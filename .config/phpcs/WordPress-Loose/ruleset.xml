@@ -37,12 +37,14 @@
 
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_print_r" />
     <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_var_export" />
+    <exclude name="WordPress.PHP.DevelopmentFunctions.error_log_error_log" />
 
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_exec" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_proc_open" />
     <exclude name="WordPress.PHP.DiscouragedPHPFunctions.system_calls_passthru" />
 
     <exclude name="WordPress.VIP.FileSystemWritesDisallow.file_ops_fwrite" />
+    <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fopen" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fwrite" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_system_read_fclose" />
     <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
