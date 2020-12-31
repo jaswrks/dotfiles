@@ -25,6 +25,7 @@
 
     <exclude name="Squiz.PHP.DisallowMultipleAssignments.Found" />
     <exclude name="WordPress.CodeAnalysis.AssignmentInCondition.Found" />
+    <exclude name="Squiz.PHP.DisallowMultipleAssignments.FoundInControlStructure" />
     <exclude name="WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition" />
 
     <exclude name="Squiz.Operators.IncrementDecrementUsage.Found" />
