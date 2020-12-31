@@ -48,11 +48,11 @@ fi;
 
 # Pull the latest dotfiles from the repo.
 
-fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.gitignore.x "${tree_dir}"/.gitignore;
-fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.gitattributes.x "${tree_dir}"/.gitattributes;
+fetch --repo=https://github.com/jaswrks/dotfiles --branch=main --source-path=/.tpl.x/.gitignore.x "${tree_dir}"/.gitignore;
+fetch --repo=https://github.com/jaswrks/dotfiles --branch=main --source-path=/.tpl.x/.gitattributes.x "${tree_dir}"/.gitattributes;
 
 if [[ -f "${tree_dir}"/package.json ]]; then
-  fetch --repo=https://github.com/jaswrks/dotfiles --branch=master --source-path=/.tpl.x/.npmignore.x "${tree_dir}"/.npmignore;
+  fetch --repo=https://github.com/jaswrks/dotfiles --branch=main --source-path=/.tpl.x/.npmignore.x "${tree_dir}"/.npmignore;
 fi; # Only for NPM projects with a `package.json` file.
 
 # Restore any customizations that existed prior.

@@ -23,7 +23,6 @@
 		"space-in-parens": ["warn", "always"],
 		"array-bracket-spacing": ["warn", "always"],
 		"object-curly-spacing": ["warn", "always"],
-		"computed-property-spacing": ["warn", "always"],
-		"newline-per-chained-call": ["error", { "ignoreChainWithDepth": 5 }]
+		"computed-property-spacing": ["warn", "always"]
 	}
 }
