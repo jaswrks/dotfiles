@@ -6,7 +6,7 @@ function ::() {
   if [[ "${1:-}" == cd || "${1:-}" == dirs ]]; then
     builtin "${@}";
   else
-    command "${@}";
+    command -p "${@}";
   fi;
 };
 
