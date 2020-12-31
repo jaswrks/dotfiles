@@ -3,9 +3,5 @@
 # Grep utils.
 
 function grep() {
-  if can-run ggrep; then
-    ggrep --perl-regexp --color=auto "${@}"; # GNU flavor.
-  else
-    :: grep --perl-regexp --color=auto "${@}";
-  fi;
+  :: grep --perl-regexp --color=auto "${@}";
 };

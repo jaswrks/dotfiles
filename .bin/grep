@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Grep command.
+
+if can-run ggrep; then
+	ggrep "${@}"; # GNU flavor.
+else
+	:: grep "${@}";
+fi;

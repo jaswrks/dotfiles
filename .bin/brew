@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Brew command.
+
+export PATH=''; # Initialize.
+export MANPATH=''; # Initialize.
+export NODE_PATH=''; # Initialize.
+eval "$(/usr/libexec/path_helper -s)";
+
+:: brew "${@}";

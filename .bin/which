@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Which command.
+
+if can-run gwhich; then
+	gwhich "${@}"; # GNU flavor.
+else
+	:: which "${@}";
+fi;

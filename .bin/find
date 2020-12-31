@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# Include bootstrap.
+
+. ~/.bash/bootstrap;
+
+# Find command.
+
+if can-run gfind; then
+	gfind "${@}"; # GNU flavor.
+else
+	:: find "${@}";
+fi;
