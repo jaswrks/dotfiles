@@ -3,8 +3,7 @@
     <description>Loosely based on WPCS.</description>
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
-	<rule ref="WordPress">
-		<exclude name="WordPress-Docs" />
+	<rule ref="WordPress-Core">
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
