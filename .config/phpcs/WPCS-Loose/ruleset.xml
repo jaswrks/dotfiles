@@ -4,7 +4,24 @@
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
 	<rule ref="WordPress">
-		<rule ref="Squiz.Commenting.DocCommentAlignment" />
+		<rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+			<properties>
+				<property name="linesCountBetweenAnnotationsGroups" value="0" />
+				<property name="annotationsGroups" type="array">
+					<element value="
+						@internal,
+						@deprecated,
+						@codeCoverageIgnore,
+						@phpcsSuppress,
+						@dataProvider,
+						@link,
+						@var,
+						@param,
+						@return,
+					" />
+				</property>
+			</properties>
+		</rule>
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
