@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<ruleset name="PSR12-WPCS-Loose">
+    <rule ref="PSR12" />
+    <description>Loosely based on PSR-12 + WPCS.</description>
+    <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
+    <rule ref="Generic.Debug.ESLint">
+        <properties>
+            <property name="configFile" value="/users/jaswrks/.eslintrc.json" />
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.NoSilencedErrors">
+        <properties>
+            <property name="error" value="false" />
+        </properties>
+    </rule>
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array" extend="true">
+                <element key="print" value="echo" />
+                <element key="create_function" value="null" />
+            </property>
+        </properties>
+    </rule>
+    <!-- WordPress-style paren-spacing. -->
+    <rule ref="WordPress.WhiteSpace.OperatorSpacing" />
+    <rule ref="Squiz.Strings.ConcatenationSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="WordPress.WhiteSpace.ControlStructureSpacing" />
+    <rule ref="Generic.Functions.OpeningFunctionBraceKernighanRitchie">
+        <properties>
+            <property name="checkClosures" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+        <properties>
+            <property name="equalsSpacing" value="1" />
+            <property name="requiredSpacesAfterOpen" value="1" />
+            <property name="requiredSpacesBeforeClose" value="1" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing.SpacingBeforeClose">
+        <severity>0</severity>
+    </rule>
+    <rule ref="PEAR.Functions.FunctionCallSignature">
+        <properties>
+            <property name="requiredSpacesAfterOpen" value="1" />
+            <property name="requiredSpacesBeforeClose" value="1" />
+        </properties>
+    </rule>
+    <rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
+    <rule ref="Generic.Formatting.SpaceAfterCast" />
+    <rule ref="Squiz.WhiteSpace.CastSpacing" />
+    <rule ref="WordPress.WhiteSpace.CastStructureSpacing" />
+    <rule ref="WordPress.PHP.TypeCasts" />
+    <rule ref="WordPress.Arrays.ArrayKeySpacingRestrictions" />
+    <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
+        <properties>
+            <property name="spacing" value="1" />
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+</ruleset>

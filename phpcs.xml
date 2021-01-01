@@ -1,4 +1,4 @@
 <?xml version="1.0" ?>
-<ruleset name="Default-PSR12-Loose">
-    <rule ref="PSR12-Loose" />
+<ruleset name="Default-PSR12-WPCS-Loose">
+    <rule ref="PSR12-WPCS-Loose" />
 </ruleset>
