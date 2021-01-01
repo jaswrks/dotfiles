@@ -517,7 +517,7 @@
     "dartsass.enableStartWithUnderscores": false,
     "dartsass.disableMinifiedFileGeneration": false,
     "dartsass.sassBinPath": "/usr/local/bin/sass",
-    "dartsass.autoPrefixBrowsersList": [ "> 1%", "last 2 versions" ],
+    "dartsass.autoPrefixBrowsersList": [ "> 0.5%", "last 2 versions", "not IE 11", "not dead" ],
 
     "prettier.requireConfig": true,
     "prettier.prettierPath": "/usr/local/lib/node_modules/prettier",
