@@ -3,9 +3,9 @@
     <description>Loosely based on WPCS.</description>
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
-	<rule ref="WordPress-Core">
-		<rule ref="Squiz.Commenting" />
-		<rule ref="Generic.Commenting.DocComment" />
+	<rule ref="WordPress">
+		<rule ref="Squiz.Commenting.BlockComment.LineIndent" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
