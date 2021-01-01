@@ -9,15 +9,12 @@
 				<property name="linesCountBetweenAnnotationsGroups" value="0" />
 				<property name="annotationsGroups" type="array">
 					<element value="
-						@internal,
+						@since,
 						@deprecated,
-						@codeCoverageIgnore,
-						@phpcsSuppress,
-						@dataProvider,
-						@link,
 						@var,
 						@param,
 						@return,
+						@see,
 					" />
 				</property>
 			</properties>
