@@ -529,7 +529,7 @@
 	"php.validate.executablePath": "/usr/local/bin/php",
 
 	"phpcs.enable": true,
-	"phpcs.autoConfigSearch": false,
+	"phpcs.autoConfigSearch": true,
 	"phpcs.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcs",
 	"phpcs.standard": "WordPress-Loose",
 	"phpcs.showSources": true,
