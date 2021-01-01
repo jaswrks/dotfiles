@@ -61,6 +61,7 @@
 		<exclude name="WordPress.PHP.DiscouragedPHPFunctions.runtime_configuration_error_reporting" />
 
 		<exclude name="Squiz.PHP.CommentedOutCode" />
+		<exclude name="Squiz.Commenting.ClassComment.Missing" />
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
 		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
