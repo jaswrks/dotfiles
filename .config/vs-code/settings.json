@@ -532,13 +532,13 @@
 	"phpcs.enable": true,
 	"phpcs.autoConfigSearch": true,
 	"phpcs.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcs",
-	"phpcs.standard": "PSR12",
+	"phpcs.standard": "PSR12-Loose",
 	"phpcs.showSources": true,
 
 	"phpcbf.enable": true,
 	"phpcbf.documentFormattingProvider": true,
 	"phpcbf.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcbf",
-	"phpcbf.standard": "PSR12",
+	"phpcbf.standard": "PSR12-Loose",
 
 	"shellcheck.enable": true,
 	"shellcheck.run": "onSave",
