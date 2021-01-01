@@ -83,14 +83,14 @@ if [[ "${OSTYPE}" == "darwin"* ]]; then
 
 	# Add PHP utility paths.
 
-	brew_prefix_php=/usr/local/opt/php@7.2;
+	brew_prefix_php=/usr/local/opt/php;
 	PRE_PATH="${PRE_PATH}${brew_prefix_php}"/bin:;
 	PRE_PATH="${PRE_PATH}${brew_prefix_php}"/sbin:;
 	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_php}"/share/man:;
 
 	# Add python utility paths.
 
-	brew_prefix_python=/usr/local/opt/python@3.9;
+	brew_prefix_python=/usr/local/opt/python;
 	PRE_PATH="${PRE_PATH}${brew_prefix_python}"/libexec/bin:;
 	PRE_MANPATH="${PRE_MANPATH}${brew_prefix_python}"/share/man:;
 
