@@ -2,7 +2,7 @@
   <ruleset name="PSR12-Loose">
   <description>Loosely based on PSR12.</description>
 
-  <rule ref="PSR12"></rule>
+  <rule ref="PSR12">
 
   <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
       <properties>
@@ -15,6 +15,8 @@
     <properties>
         <property name="ignoreBlankLines" value="false" />
     </properties>
+  </rule>
+
   </rule>
 
 </ruleset>
