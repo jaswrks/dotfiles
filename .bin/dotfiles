@@ -146,12 +146,13 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 			'#^\.libs(?:/|$)#ui',
 		];
 		$this->other_symlinks     = [
-			$this->dotfiles_home . '/.tpl.x/.gitconfig.x'             => $this->home . '/.gitconfig',
-			$this->dotfiles_home . '/.tpl.x/.gitignore.x'             => $this->home . '/.gitignore',
-			$this->dotfiles_home . '/.config/php/.ini'                => '/usr/local/etc/php/7.4/conf.d/z90.ini',
+			$this->dotfiles_home . '/.tpl.x/.gitconfig.x' => $this->home . '/.gitconfig',
+			$this->dotfiles_home . '/.tpl.x/.gitignore.x' => $this->home . '/.gitignore',
+			$this->dotfiles_home . '/.config/php/.ini'    => '/usr/local/etc/php/7.4/conf.d/z90.ini',
+			$this->dotfiles_home . '/.config/php/.ini'    => '/usr/local/etc/php/8.0/conf.d/z90.ini',
 			$this->dotfiles_home . '/.config/macos/key-bindings.dict' => $this->home . '/Library/KeyBindings/DefaultKeyBinding.dict',
-			$this->dotfiles_home . '/.config/vs-code/settings.json'   => $this->home . '/Library/Application Support/Code/User/settings.json',
-			$this->dotfiles_home . '/../dotfiles/.libs'               => $this->dotfiles_home . '/.libs',
+			$this->dotfiles_home . '/.config/vs-code/settings.json' => $this->home . '/Library/Application Support/Code/User/settings.json',
+			$this->dotfiles_home . '/../dotfiles/.libs'   => $this->dotfiles_home . '/.libs',
 		];
 
 		$this->symlinks_done          = [];
