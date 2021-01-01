@@ -6,6 +6,7 @@
 	<rule ref="WordPress">
 		<rule ref="Squiz.Commenting.BlockComment.LineIndent" />
 		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
+		<rule ref="Generic.Commenting.DocComment.NonParamGroup" />
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
