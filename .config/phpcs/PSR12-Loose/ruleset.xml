@@ -11,12 +11,12 @@
       </properties>
   </rule>
 
+  </rule>
+
   <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace">
     <properties>
         <property name="ignoreBlankLines" value="false" />
     </properties>
-  </rule>
-
   </rule>
 
 </ruleset>
