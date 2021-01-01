@@ -9,6 +9,7 @@
 		<rule ref="Generic.Commenting.DocComment.ParamGroup" />
 		<rule ref="Generic.Commenting.DocComment.NonParamGroup" />
 		<rule ref="Generic.Commenting.DocComment.TagsNotGrouped" />
+		<rule ref="Generic.Commenting.DocComment.SpacingBeforeShort" />
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
