@@ -4,14 +4,7 @@
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
 	<rule ref="WordPress">
-		<rule ref="Squiz.Commenting.BlockComment.LineIndent" />
-		<rule ref="Squiz.Commenting.BlockComment.FirstLineIndent" />
-		<rule ref="Squiz.Commenting.BlockComment.LastLineIndent" />
-
-		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
-		<rule ref="Generic.Commenting.DocComment.ParamGroup" />
-		<rule ref="Generic.Commenting.DocComment.NonParamGroup" />
-		<rule ref="Generic.Commenting.DocComment.TagsNotGrouped" />
+		<rule ref="Squiz.Commenting.DocCommentAlignment" />
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
