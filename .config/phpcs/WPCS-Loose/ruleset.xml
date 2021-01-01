@@ -4,7 +4,18 @@
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
 	<rule ref="WordPress">
-		<rule ref="Generic.Commenting.DocComment" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
+		<rule ref="Generic.Commenting.DocComment.ParamNotFirst" />
+		<rule ref="Generic.Commenting.DocComment.ParamGroup" />
+		<rule ref="Generic.Commenting.DocComment.NonParamGroup" />
+		<rule ref="Generic.Commenting.DocComment.TagsNotGrouped" />
+		<rule ref="Generic.Commenting.DocComment.ContentAfterOpen" />
+		<rule ref="Generic.Commenting.DocComment.SpacingBeforeShort" />
+		<rule ref="Generic.Commenting.DocComment.ContentBeforeClose" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
+		<rule ref="Generic.Commenting.DocComment.TagValueIndent" />
 
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
