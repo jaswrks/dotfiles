@@ -65,20 +65,6 @@
 		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
 		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
 
-		<rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
-			<properties>
-				<property name="linesCountBetweenAnnotationsGroups" value="0" />
-				<property name="annotationsGroups" type="array">
-					<element value="
-						@since,
-						@deprecated,
-						@var,
-						@param,
-						@return,
-						@see,
-					" />
-				</property>
-			</properties>
-		</rule>
+
     </rule>
 </ruleset>
