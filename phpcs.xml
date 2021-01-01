@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<ruleset name="Default-PSR12-WPCS-Loose">
-    <rule ref="PSR12-WPCS-Loose" />
-    <description>Loosely based on PSR-12 + WPCS.</description>
+<ruleset name="Default-WPCS-Loose">
+    <rule ref="WPCS-Loose" />
+    <description>Loosely based on WPCS.</description>
 </ruleset>
