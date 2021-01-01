@@ -4,7 +4,7 @@
 
 function grep() {
   if can-run ggrep; then
-    :: ggrep --perl-regexp --color=auto "${@}";
+    ggrep --perl-regexp --color=auto "${@}";
   else
     :: grep --color=auto "${@}";
   fi;
