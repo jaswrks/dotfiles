@@ -64,9 +64,8 @@
 		<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 		<exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
 		<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
-    </rule>
 
-	<rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+		<rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
 			<properties>
 				<property name="linesCountBetweenAnnotationsGroups" value="0" />
 				<property name="annotationsGroups" type="array">
@@ -81,6 +80,5 @@
 				</property>
 			</properties>
 		</rule>
-
-
+    </rule>
 </ruleset>
