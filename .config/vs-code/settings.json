@@ -545,10 +545,6 @@
     "shellcheck.exclude": [ "1090", "2155", "2114", "1091", "2129" ],
     "shellcheck.executablePath": "/usr/local/bin/shellcheck",
 
-    "svgviewer.enableautopreview": false,
-    "svgviewer.transparencygrid": true,
-    "svgviewer.showzoominout": true,
-
     "terminal.integrated.fontSize": 15,
     "terminal.integrated.cursorStyle": "line",
     "terminal.integrated.cursorBlinking": true,

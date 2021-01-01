@@ -4,6 +4,8 @@
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
 	<rule ref="WordPress">
+		<rule ref="Generic.Commenting.DocComment" />
+
 		<rule ref="Generic.Debug.ESLint">
 			<properties>
 				<property name="configFile" value="/users/jaswrks/.eslintrc.json" />
@@ -16,19 +18,6 @@
 					<element key="create_function" value="null" />
 				</property>
 			</properties>
-		</rule>
-
-		    <!-- There MUST NOT be trailing whitespace at the end of lines.
-		Blank lines MAY be added to improve readability and to indicate related blocks of code except where explicitly forbidden. -->
-		<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace" />
-		<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
-			<severity>0</severity>
-		</rule>
-		<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
-			<severity>0</severity>
-		</rule>
-		<rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
-			<severity>0</severity>
 		</rule>
 
 		<rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace" />
