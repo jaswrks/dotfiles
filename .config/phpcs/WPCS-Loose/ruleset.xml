@@ -1,8 +1,9 @@
 <?xml version="1.0" ?>
 <ruleset name="WPCS-Loose">
-    <rule ref="WordPress" />
     <description>Loosely based on WPCS.</description>
     <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
+
+	<rule ref="WordPress">
 
     <rule ref="Generic.Debug.ESLint">
         <properties>
@@ -64,4 +65,5 @@
 	<exclude name="Squiz.Commenting.InlineComment.InvalidEndChar" />
 	<exclude name="Squiz.Commenting.FunctionComment.ThrowsNotCapital" />
 	<exclude name="Squiz.Commenting.FunctionComment.ParamCommentFullStop" />
+    </rule>
 </ruleset>
