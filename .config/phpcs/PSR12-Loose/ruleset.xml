@@ -7,6 +7,16 @@
             <property name="ignoreBlankLines" value="false" />
         </properties>
     </rule>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreNewlines" value="true" />
+        </properties>
+    </rule>
+    <rule ref="Squiz.WhiteSpace.OperatorSpacing">
+        <properties>
+            <property name="ignoreSpacingBeforeAssignments" value="false" />
+        </properties>
+    </rule>
     <rule ref="Generic.WhiteSpace.ArbitraryParenthesesSpacing">
         <properties>
             <property name="spacing" value="1" />
