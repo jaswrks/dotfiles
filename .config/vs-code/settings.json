@@ -222,7 +222,8 @@
 			"other": true,
 			"comments": true,
 			"strings": true
-		}
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 
 	"[html]": {

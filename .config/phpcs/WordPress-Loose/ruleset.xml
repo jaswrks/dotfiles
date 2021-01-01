@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <ruleset name="WordPress-Loose">
-  <description>WordPress loose ruleset.</description>
+  <description>Loosely based on WordPress.</description>
   <autoload>/users/jaswrks/.libs/wpcs/vendor/autoload.php</autoload>
 
   <rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace" />
