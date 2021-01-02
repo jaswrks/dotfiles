@@ -39,6 +39,15 @@ typings/
 *.sublime-project
 *.sublime-workspace
 
+# Netbeans
+
+*.nbproject
+
+# VS Code
+
+.vscode/
+*.code-workspace
+
 # Vendor
 
 vendor/
