@@ -234,6 +234,10 @@ typings/ export-ignore
 *.sublime-project export-ignore
 *.sublime-workspace export-ignore
 
+# Netbeans
+
+*.nbproject export-ignore
+
 # VS Code
 
 .vscode/ export-ignore
