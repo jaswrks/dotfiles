@@ -21,6 +21,7 @@
 		<rule ref="PSR1.Classes.ClassDeclaration.MissingNamespace" />
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName" />
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+		<exclude name="PSR2.Namespaces.NamespaceDeclaration.BlankLineAfter" />
 
 		<rule ref="Generic.Arrays.DisallowLongArraySyntax" />
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
