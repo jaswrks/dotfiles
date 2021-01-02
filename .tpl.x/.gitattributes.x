@@ -236,6 +236,7 @@ typings/ export-ignore
 
 # VS Code
 
+.vscode/ export-ignore
 *.code-workspace export-ignore
 
 # SASS

@@ -45,6 +45,7 @@ typings/
 
 # VS Code
 
+.vscode/
 *.code-workspace
 
 # Vendor
