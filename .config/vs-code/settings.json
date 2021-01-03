@@ -1,555 +1,556 @@
 {
-    "window.zoomLevel": 0,
-    "window.nativeTabs": true,
-    "window.newWindowDimensions": "maximized",
-
-    "window.openFoldersInNewWindow": "off",
-    "window.openFilesInNewWindow": "off",
-
-    "telemetry.enableTelemetry": false,
-    "telemetry.enableCrashReporter": false,
-
-    "workbench.tips.enabled": false,
-    "workbench.settings.editor": "json",
-    "workbench.view.alwaysShowHeaderActions": true,
-    "workbench.editor.highlightModifiedTabs": true,
-    "workbench.startupEditor": "newUntitledFile",
-
-    "workbench.colorTheme": "Plastic",
-    "workbench.colorCustomizations": {
-        "[Plastic]": {
-            "editor.background": "#030405",
-            "editor.lineHighlightBackground": "#000",
-            "editor.lineHighlightBorder": "#0c1013",
-            "editorWhitespace.foreground": "#131313",
-            "editorIndentGuide.background": "#131313"
-        }
-    },
-    "explorer.compactFolders": false,
-
-    "editor.fontSize": 16,
-    "editor.lineHeight": 18,
-    "editor.fontWeight": "300",
-    "editor.fontLigatures": true,
-    "editor.fontFamily": "'Operator Mono', OperatorMonoNerdFontC-Book",
-
-    "editor.tokenColorCustomizations": {
-        "[Plastic]": {
-            "textMateRules": [
-                {
-                    "name": "Comments",
-                    "scope": [ "comment.block", "comment.line" ],
-                    "settings": {
-                        "fontStyle": "",
-                        "foreground": "#747474"
-                    }
-                },
-                {
-                    "name": "docBlock Comments",
-                    "scope": [ "comment.block.documentation" ],
-                    "settings": {
-                        "fontStyle": "",
-                        "foreground": "#7e7e7e"
-                    }
-                },
-                {
-                    "name": "Operator Mono Italics",
-                    "scope": [ "storage.type.php", "keyword.other.new.php", "variable.language.this.php", "keyword.control.exception.catch.php", "keyword.operator.return-value.php", "punctuation.definition.storage-type.begin.bracket.round.php", "punctuation.definition.storage-type.end.bracket.round.php" ],
-                    "settings": {
-                        "fontStyle": "italic"
-                    }
-                }
-            ]
-        }
-    },
-
-    "editor.tabSize": 4,
-    "editor.insertSpaces": false,
-    "editor.detectIndentation": true,
-    "editor.autoIndent": "full",
-
-    "editor.renderWhitespace": "boundary",
-    "editor.renderControlCharacters": false,
-    "editor.renderIndentGuides": true,
-
-    "editor.autoSurround": "never",
-    "editor.autoClosingQuotes": "never",
-    "editor.autoClosingBrackets": "beforeWhitespace",
-
-    "spaces-inside-braces.enable": true,
-    "spaces-inside-braces.enableForAngle": true,
-    "spaces-inside-braces.enableForBraces": true,
-    "spaces-inside-braces.enableForBrackets": true,
-    "spaces-inside-braces.enableForParens": true,
-
-    "editor.acceptSuggestionOnEnter": "smart",
-    "editor.suggest.snippetsPreventQuickSuggestions": true,
-    "editor.suggestOnTriggerCharacters": false,
-    "editor.parameterHints.enabled": false,
-    "editor.suggest.localityBonus": true,
-    "editor.quickSuggestionsDelay": 1000,
-    "editor.hover.delay": 1000,
-    "editor.suggestFontSize": 15,
-    "editor.suggestLineHeight": 16,
-    "editor.quickSuggestions": {
-        "other": true,
-        "comments": true,
-        "strings": true
-    },
-
-    "editor.formatOnType": false,
-    "editor.formatOnPaste": false,
-    "editor.formatOnSave": false,
-    "editor.formatOnSaveTimeout": 5000,
-
-    "editor.minimap.enabled": false,
-    "editor.minimap.showSlider": "always",
-
-    "editor.wordWrap": "off",
-    "editor.wordWrapColumn": 120,
-    "editor.wrappingIndent": "indent",
-
-    "editor.folding": false,
-    "editor.scrollBeyondLastLine": false,
-
-    "[shellscript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[php]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "persoderlind.vscode-phpcbf"
-    },
-
-    "[ruby]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[python]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[go]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[sql]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[ini]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[xml]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[html]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[scss]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[less]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[css]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[typescript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-
-    "[typescriptreact]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-
-    "[javascript]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-
-    "[javascriptreact]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "dbaeumer.vscode-eslint"
-    },
-
-    "[json]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[jsonc]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        },
-        "editor.defaultFormatter": "esbenp.prettier-vscode"
-    },
-
-    "[markdown]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "on",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[yaml]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[dockerfile]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[git-commit]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-
-        "editor.rulers": [ 72 ],
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[git-rebase]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-
-        "editor.rulers": [ 72 ],
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "[diff]": {
-        "editor.tabSize": 4,
-        "editor.insertSpaces": false,
-        "editor.detectIndentation": true,
-        "editor.autoIndent": "full",
-        "editor.wordWrap": "off",
-
-        "editor.quickSuggestions": {
-            "other": true,
-            "comments": true,
-            "strings": true
-        }
-    },
-
-    "files.eol": "\n",
-    "files.encoding": "utf8",
-
-    "files.autoSave": "off",
-    "files.autoSaveDelay": 1000,
-    "files.enableTrash": true,
-
-    "files.exclude": {
-        "**/.git": true,
-        "**/.svn": true,
-        "**/.hg": true,
-        "**/CVS": true,
-        "**/Icon?": true,
-        "**/.DS_Store": true
-    },
-    "files.associations": {
-        "*.php-x": "php"
-    },
-    "files.insertFinalNewline": true,
-    "files.trimTrailingWhitespace": true,
-    "files.trimFinalNewlines": true,
-
-    "search.exclude": {
-        "**/vendor": true,
-        "**/node_modules": true,
-        "**/jspm_packages": true,
-        "**/bower_components": true
-    },
-    "search.useIgnoreFiles": true,
-    "search.useGlobalIgnoreFiles": true,
-    "search.collapseResults": "alwaysCollapse",
-
-    "git.fetchOnPull": true,
-    "git.rebaseWhenSync": true,
-    "git.allowForcePush": true,
-    "git.enableCommitSigning": true,
-    "git.showPushSuccessNotification": true,
-    "git.promptToSaveFilesBeforeCommit": "always",
-    "git.path": "/usr/local/bin/git",
-
-    "eslint.run": "onSave",
-    "eslint.format.enable": true,
-    "eslint.lintTask.enable": true,
-    "eslint.nodePath": "/usr/local/lib/node_modules",
-    "eslint.options": {
-        "configFile": "/users/jaswrks/.eslintrc.json"
-    },
-
-    "dartsass.disableSourceMap": true,
-    "dartsass.disableAutoPrefixer": false,
-    "dartsass.disableCompileOnSave": false,
-    "dartsass.enableStartWithUnderscores": false,
-    "dartsass.disableMinifiedFileGeneration": false,
-    "dartsass.sassBinPath": "/usr/local/bin/sass",
-    "dartsass.autoPrefixBrowsersList": [ "> 0.5%", "last 2 versions", "not IE 11", "not dead" ],
-
-    "prettier.requireConfig": true,
-    "prettier.prettierPath": "/usr/local/lib/node_modules/prettier",
-    "prettier.configPath": "/users/jaswrks/.prettierrc.json",
-    "prettier.ignorePath": ".prettierignore",
-
-    "php.suggest.basic": true,
-    "php.validate.enable": true,
-    "php.validate.run": "onSave",
-    "php.validate.executablePath": "/usr/local/bin/php",
-
-    "phpcs.enable": true,
-    "phpcs.standard": null,
-    "phpcs.autoConfigSearch": true,
-    "phpcs.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcs",
-    "phpcs.showSources": true,
-
-    "phpcbf.enable": true,
-    "phpcbf.standard": null,
-    "phpcbf.documentFormattingProvider": true,
-    "phpcbf.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcbf",
-
-    "shellcheck.enable": true,
-    "shellcheck.run": "onSave",
-    "shellcheck.exclude": [ "1090", "2155", "2114", "1091", "2129" ],
-    "shellcheck.executablePath": "/usr/local/bin/shellcheck",
-
-    "terminal.integrated.fontSize": 15,
-    "terminal.integrated.cursorStyle": "line",
-    "terminal.integrated.cursorBlinking": true,
-    "terminal.integrated.copyOnSelection": true,
-
-    "terminal.external.osxExec": "iTerm.app",
-    "terminal.integrated.shell.osx": "/usr/local/bin/zsh"
+	"window.zoomLevel": 0,
+	"window.nativeTabs": true,
+	"window.newWindowDimensions": "maximized",
+
+	"window.openFoldersInNewWindow": "off",
+	"window.openFilesInNewWindow": "off",
+
+	"telemetry.enableTelemetry": false,
+	"telemetry.enableCrashReporter": false,
+
+	"workbench.tips.enabled": false,
+	"workbench.settings.editor": "json",
+	"workbench.view.alwaysShowHeaderActions": true,
+	"workbench.editor.highlightModifiedTabs": true,
+	"workbench.startupEditor": "newUntitledFile",
+
+	"workbench.colorTheme": "Plastic",
+	"workbench.colorCustomizations": {
+		"[Plastic]": {
+			"editor.background": "#030405",
+			"editor.lineHighlightBackground": "#000",
+			"editor.lineHighlightBorder": "#0c1013",
+			"editorWhitespace.foreground": "#131313",
+			"editorIndentGuide.background": "#131313"
+		}
+	},
+	"explorer.compactFolders": false,
+
+	"editor.fontSize": 16,
+	"editor.lineHeight": 18,
+	"editor.fontWeight": "300",
+	"editor.fontLigatures": true,
+	"editor.fontFamily": "'Operator Mono', OperatorMonoNerdFontC-Book",
+
+	"editor.tokenColorCustomizations": {
+		"[Plastic]": {
+			"textMateRules": [
+				{
+					"name": "Comments",
+					"scope": [ "comment.block", "comment.line" ],
+					"settings": {
+						"fontStyle": "",
+						"foreground": "#747474"
+					}
+				},
+				{
+					"name": "docBlock Comments",
+					"scope": [ "comment.block.documentation" ],
+					"settings": {
+						"fontStyle": "",
+						"foreground": "#7e7e7e"
+					}
+				},
+				{
+					"name": "Operator Mono Italics",
+					"scope": [ "storage.type.php", "keyword.other.new.php", "variable.language.this.php", "keyword.control.exception.catch.php", "keyword.operator.return-value.php", "punctuation.definition.storage-type.begin.bracket.round.php", "punctuation.definition.storage-type.end.bracket.round.php" ],
+					"settings": {
+						"fontStyle": "italic"
+					}
+				}
+			]
+		}
+	},
+
+	"editor.tabSize": 4,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": true,
+	"editor.autoIndent": "full",
+
+	"editor.renderWhitespace": "boundary",
+	"editor.renderControlCharacters": false,
+	"editor.renderIndentGuides": true,
+
+	"editor.autoSurround": "never",
+	"editor.autoClosingQuotes": "never",
+	"editor.autoClosingBrackets": "beforeWhitespace",
+
+	"spaces-inside-braces.enable": true,
+	"spaces-inside-braces.enableForAngle": true,
+	"spaces-inside-braces.enableForBraces": true,
+	"spaces-inside-braces.enableForBrackets": true,
+	"spaces-inside-braces.enableForParens": true,
+
+	"editor.acceptSuggestionOnEnter": "smart",
+	"editor.suggest.snippetsPreventQuickSuggestions": true,
+	"editor.suggestOnTriggerCharacters": false,
+	"editor.parameterHints.enabled": false,
+	"editor.suggest.localityBonus": true,
+	"editor.quickSuggestionsDelay": 1000,
+	"editor.hover.delay": 1000,
+	"editor.suggestFontSize": 15,
+	"editor.suggestLineHeight": 16,
+	"editor.quickSuggestions": {
+		"other": true,
+		"comments": true,
+		"strings": true
+	},
+
+	"editor.formatOnType": false,
+	"editor.formatOnPaste": false,
+	"editor.formatOnSave": false,
+	"editor.formatOnSaveTimeout": 5000,
+
+	"editor.minimap.enabled": false,
+	"editor.minimap.showSlider": "always",
+
+	"editor.wordWrap": "off",
+	"editor.wordWrapColumn": 120,
+	"editor.wrappingIndent": "indent",
+
+	"editor.folding": false,
+	"editor.scrollBeyondLastLine": false,
+
+	"[shellscript]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[php]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "persoderlind.vscode-phpcbf"
+	},
+
+	"[ruby]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[python]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[go]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[sql]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[ini]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[xml]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[html]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[scss]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[less]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[css]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[typescript]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+
+	"[typescriptreact]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+
+	"[javascript]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+	"javascript.suggestionActions.enabled": false,
+
+	"[javascriptreact]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+	},
+
+	"[json]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[jsonc]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		},
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+
+	"[markdown]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "on",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[yaml]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[dockerfile]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[git-commit]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+
+		"editor.rulers": [ 72 ],
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[git-rebase]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+
+		"editor.rulers": [ 72 ],
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"[diff]": {
+		"editor.tabSize": 4,
+		"editor.insertSpaces": false,
+		"editor.detectIndentation": true,
+		"editor.autoIndent": "full",
+		"editor.wordWrap": "off",
+
+		"editor.quickSuggestions": {
+			"other": true,
+			"comments": true,
+			"strings": true
+		}
+	},
+
+	"files.eol": "\n",
+	"files.encoding": "utf8",
+
+	"files.autoSave": "off",
+	"files.autoSaveDelay": 1000,
+	"files.enableTrash": true,
+
+	"files.exclude": {
+		"**/.git": true,
+		"**/.svn": true,
+		"**/.hg": true,
+		"**/CVS": true,
+		"**/Icon?": true,
+		"**/.DS_Store": true
+	},
+	"files.associations": {
+		"*.php-x": "php"
+	},
+	"files.insertFinalNewline": true,
+	"files.trimTrailingWhitespace": true,
+	"files.trimFinalNewlines": true,
+
+	"search.exclude": {
+		"**/vendor": true,
+		"**/node_modules": true,
+		"**/jspm_packages": true,
+		"**/bower_components": true
+	},
+	"search.useIgnoreFiles": true,
+	"search.useGlobalIgnoreFiles": true,
+	"search.collapseResults": "alwaysCollapse",
+
+	"git.fetchOnPull": true,
+	"git.rebaseWhenSync": true,
+	"git.allowForcePush": true,
+	"git.enableCommitSigning": true,
+	"git.showPushSuccessNotification": true,
+	"git.promptToSaveFilesBeforeCommit": "always",
+	"git.path": "/usr/local/bin/git",
+
+	"eslint.run": "onSave",
+	"eslint.format.enable": true,
+	"eslint.lintTask.enable": true,
+	"eslint.nodePath": "/usr/local/lib/node_modules",
+	"eslint.options": {
+		"configFile": "/users/jaswrks/.eslintrc.json"
+	},
+
+	"dartsass.disableSourceMap": true,
+	"dartsass.disableAutoPrefixer": false,
+	"dartsass.disableCompileOnSave": false,
+	"dartsass.enableStartWithUnderscores": false,
+	"dartsass.disableMinifiedFileGeneration": false,
+	"dartsass.sassBinPath": "/usr/local/bin/sass",
+	"dartsass.autoPrefixBrowsersList": [ "> 0.5%", "last 2 versions", "not IE 11", "not dead" ],
+
+	"prettier.requireConfig": true,
+	"prettier.prettierPath": "/usr/local/lib/node_modules/prettier",
+	"prettier.configPath": "/users/jaswrks/.prettierrc.json",
+	"prettier.ignorePath": ".prettierignore",
+
+	"php.suggest.basic": true,
+	"php.validate.enable": true,
+	"php.validate.run": "onSave",
+	"php.validate.executablePath": "/usr/local/bin/php",
+
+	"phpcs.enable": true,
+	"phpcs.standard": null,
+	"phpcs.autoConfigSearch": true,
+	"phpcs.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcs",
+	"phpcs.showSources": true,
+
+	"phpcbf.enable": true,
+	"phpcbf.standard": null,
+	"phpcbf.documentFormattingProvider": true,
+	"phpcbf.executablePath": "/users/jaswrks/.composer/vendor/bin/phpcbf",
+
+	"shellcheck.enable": true,
+	"shellcheck.run": "onSave",
+	"shellcheck.exclude": [ "1090", "2155", "2114", "1091", "2129" ],
+	"shellcheck.executablePath": "/usr/local/bin/shellcheck",
+
+	"terminal.integrated.fontSize": 15,
+	"terminal.integrated.cursorStyle": "line",
+	"terminal.integrated.cursorBlinking": true,
+	"terminal.integrated.copyOnSelection": true,
+
+	"terminal.external.osxExec": "iTerm.app",
+	"terminal.integrated.shell.osx": "/usr/local/bin/zsh"
 }
