@@ -56,6 +56,15 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 	protected $home;
 
 	/**
+	 * Permissions.
+	 *
+	 * @since 2018-11-01
+	 *
+	 * @var array
+	 */
+	protected $permissions;
+
+	/**
 	 * Root directory symlinks.
 	 *
 	 * @since 2018-11-01
@@ -126,6 +135,38 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 		$this->dotfiles_home = dirname( __FILE__, 2 );
 		$this->home          = rtrim( $_SERVER['HOME'], '\\/' );
 
+		if ( ! is_dir( $this->dotfiles_home . '/dotfiles' ) ) {
+			$this->error( __FUNCTION__ . ': Missing: `' . $this->dotfiles_home . '/dotfiles`.' );
+			$this->exit_status( 1 );
+		} elseif ( ! is_dir( $this->dotfiles_home . '/dotfiles-mac' ) ) {
+			$this->error( __FUNCTION__ . ': Missing: `' . $this->dotfiles_home . '/dotfiles-mac`.' );
+			$this->exit_status( 1 );
+		}
+
+		$this->permissions = [
+			$this->dotfiles_home . '/.ssh'                 => 0700,
+			$this->dotfiles_home . '/.ssh/authorized_keys' => 0644,
+			$this->dotfiles_home . '/.ssh/config'          => 0644,
+
+			$this->dotfiles_home . '/.ssh/jas-bot-np'      => 0600,
+			$this->dotfiles_home . '/.ssh/jas-bot-np.pub'  => 0644,
+
+			$this->dotfiles_home . '/.ssh/jas-bot-dk-np'   => 0600,
+			$this->dotfiles_home . '/.ssh/jas-bot-dk-np.pub' => 0644,
+
+			$this->dotfiles_home . '/.ssh/w4s-bot-np'      => 0600,
+			$this->dotfiles_home . '/.ssh/w4s-bot-np.pub'  => 0644,
+
+			$this->dotfiles_home . '/.ssh/w4s-bot-dk-np'   => 0600,
+			$this->dotfiles_home . '/.ssh/w4s-bot-dk-np.pub' => 0644,
+		];
+		for ( $_i = 1; $_i <= 10; $_i++ ) {
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa' . ( $_i < 2 ? '' : $_i ) ]     = 0600;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa.pub' . ( $_i < 2 ? '' : $_i ) ] = 0644;
+
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np' . ( $_i < 2 ? '' : $_i ) ]     = 0600;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np.pub' . ( $_i < 2 ? '' : $_i ) ] = 0644;
+		}
 		$this->root_dir_symlinks  = [
 			$this->dotfiles_home . '/.a8c',
 			$this->dotfiles_home . '/.aws',
@@ -168,6 +209,7 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 	 */
 	public function update() : void {
 		$this->update_files();
+		$this->set_permissions();
 		$this->do_root_dir_symlinks();
 		$this->do_file_symlinks();
 		$this->do_other_symlinks();
@@ -191,13 +233,30 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 				$this->dotfiles_home . '/../' . $_basename
 			);
 			passthru( 'git fetch --all', $this->dotfiles_home . '/' . $_basename );
-
 			passthru(
 				'git --git-dir=' . quote_shell_arg( $this->dotfiles_home . '/' . $_basename ) .
 				' --work-tree=' . quote_shell_arg( $this->dotfiles_home ) .
 				' checkout origin/main --force'
 			);
 		}
+	}
+
+	/**
+	 * Sets permissions.
+	 *
+	 * @since 2018-11-01
+	 */
+	protected function set_permissions() : void {
+		if ( $this->get_option( 'dry-run' ) ) {
+			return;
+		}
+		foreach ( $this->permissions as $_resource_path => $_permission ) {
+			if ( ! chmod( $_resource_path, $_permission ) ) {
+				$this->error( __FUNCTION__ . ': Unable to chmod: `' . $_resource_path . '` to `' . $_permission . '`.' );
+				$this->exit_status( 1 );
+			}
+		}
+		$this->success( 'Permissions updated successfully.' . "\n" );
 	}
 
 	/**
