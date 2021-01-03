@@ -161,11 +161,11 @@ class Dotfiles_CLI_Tool extends CLI_Tool {
 			$this->dotfiles_home . '/.ssh/w4s-bot-dk-np.pub' => 0644,
 		];
 		for ( $_i = 1; $_i <= 10; $_i++ ) {
-			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa' . ( $_i < 2 ? '' : $_i ) ]     = 0600;
-			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa.pub' . ( $_i < 2 ? '' : $_i ) ] = 0644;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa' . ( $_i < 2 ? '' : $_i ) ]          = 0600;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa' . ( $_i < 2 ? '' : $_i ) . '.pub' ] = 0644;
 
-			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np' . ( $_i < 2 ? '' : $_i ) ]     = 0600;
-			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np.pub' . ( $_i < 2 ? '' : $_i ) ] = 0644;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np' . ( $_i < 2 ? '' : $_i ) ]          = 0600;
+			$this->permissions[ $this->dotfiles_home . '/.ssh/id_rsa_np' . ( $_i < 2 ? '' : $_i ) . '.pub' ] = 0644;
 		}
 		$this->root_dir_symlinks  = [
 			$this->dotfiles_home . '/.a8c',
