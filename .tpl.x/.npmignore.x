@@ -64,8 +64,9 @@ jspm_packages/
 
 bower_components/
 
-# SASS
+# Linaria & SASS
 
+.linaria-cache/
 .sass-cache/
 
 # Elastic Beanstalk
@@ -125,9 +126,9 @@ Icon?
 
 # These are in addition to what we have in `.gitignore`. ---------------------------------------------------------------
 
-# Assets
+# LFS Storage
 
-/assets/
+/lfs/
 
 # Demos
 
@@ -167,15 +168,9 @@ Icon?
 /_includes/
 /_sass/
 
-# Templates
+# Bower
 
-/rdm.about.md
-/rdm.body.md
-/rdm.tpl.md
-
-/lic.about.txt
-/lic.body.txt
-/lic.tpl.txt
+/.bowerrc
 
 # NPM
 
@@ -185,10 +180,18 @@ Icon?
 # Babel
 
 /.babelrc
+/.babelrc.*
+/babel.config.*
 
-# Bower
+# Linaria
 
-/.bowerrc
+/.linariarc
+/.linariarc.*
+/linaria.config.*
+
+# Webpack
+
+/webpack.config.*
 
 # TypeScript
 

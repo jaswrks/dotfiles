@@ -243,8 +243,9 @@ typings/ export-ignore
 .vscode/ export-ignore
 *.code-workspace export-ignore
 
-# SASS
+# Linaria & SASS
 
+.linaria-cache/ export-ignore
 .sass-cache/ export-ignore
 
 # Elastic Beanstalk
@@ -304,11 +305,11 @@ Icons -export-ignore
 
 # Export Ignore — in addition to what we have in `.gitignore`. ---------------------------------------------------------
 
-# Assets
+# LFS Storage
 
 /lfs/ export-ignore
 
-# LFS Storage (Assets) -------------------------------------------------------------------------------------------------
+# LFS Storage ----------------------------------------------------------------------------------------------------------
 
 /lfs/** filter=lfs diff=lfs merge=lfs -text
 

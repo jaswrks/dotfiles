@@ -64,8 +64,9 @@ jspm_packages/
 
 bower_components/
 
-# SASS
+# Linaria & SASS
 
+.linaria-cache/
 .sass-cache/
 
 # Elastic Beanstalk
