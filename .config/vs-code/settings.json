@@ -477,7 +477,8 @@
 		"**/.hg": true,
 		"**/CVS": true,
 		"**/Icon?": true,
-		"**/.DS_Store": true
+		"**/.DS_Store": true,
+		"**/.linaria-cache": true
 	},
 	"files.associations": {
 		"*.php-x": "php"
