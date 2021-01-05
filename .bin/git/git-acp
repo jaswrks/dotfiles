@@ -10,20 +10,20 @@
 
 # Collect arguments.
 
-message=''; main_dev='';
+message=''; other_branches='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
     -m)
-      message="${2:-}"
+      message="${2:-}";
       shift 2 || shift;
       ;;
     --message=*)
-      message="${1#*=}"
+      message="${1#*=}";
       shift;
       ;;
-    --main-dev|--dev-main)
-      main_dev=true
+    --other-branch=*|--other-branches=*)
+      other_branches="${1#*=}";
       shift;
       ;;
     *)
@@ -37,23 +37,19 @@ if [[ -z "${message:-}" ]]; then
   echo 'One of -m or --message is required.'; exit 1;
 fi;
 
+other_branches="${other_branches// /}";
+start_branch="$(git-current-branch)";
+
 # Run commands.
 
 git add --all && git commit --message="${message}" && git push;
 
-if [[ -n "${main_dev}" ]]; then
-	start_branch="$(git-current-branch)";
-
-	if [[ 'main' == "${start_branch}" ]]; then
-		other_branch='dev';
-
-	elif [[ 'dev' == "${start_branch}" ]]; then
-		other_branch='main';
-
-	else other_branch=''; fi;
-
-	if [[ -n "${other_branch}" ]] && git-branch-exists "${other_branch}"; then
-		git checkout "${other_branch}" && git merge "${start_branch}" && git push;
-		git checkout "${start_branch}";
-	fi;
+if [[ -n "${other_branches}" ]]; then
+  IFS=',' read -r -a _other_branches <<< "${other_branches}";
+  for _other_branch in "${_other_branches[@]}"; do
+    if [[ "${_other_branch}" != "${start_branch}" ]] && git-branch-exists "${_other_branch}"; then
+      git checkout "${_other_branch}" && git merge "${start_branch}" && git push;
+		  git checkout "${start_branch}";
+    fi;
+  done;
 fi;
