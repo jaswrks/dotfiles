@@ -260,6 +260,7 @@ typings/ export-ignore
 # VCS
 
 .git/ export-ignore
+.git-dir/ export-ignore
 
 .svn/ export-ignore
 _svn/ export-ignore

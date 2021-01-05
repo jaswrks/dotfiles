@@ -473,6 +473,7 @@
 
 	"files.exclude": {
 		"**/.git": true,
+		"**/.git-dir": true,
 		"**/.svn": true,
 		"**/.hg": true,
 		"**/CVS": true,

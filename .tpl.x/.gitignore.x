@@ -81,6 +81,7 @@ bower_components/
 # VCS
 
 .git/
+.git-dir/
 
 .svn/
 _svn/
