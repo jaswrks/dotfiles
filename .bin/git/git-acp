@@ -58,7 +58,7 @@ fi;
 # Is the repo already clean?
 
 if ! git-repo-is-dirty; then
-  echo 'Nothing to commit, working tree clean.';
+  echo 'Nothing to commit, working tree clean.'; exit 0;
 fi;
 
 # Do git add, commit, push.
