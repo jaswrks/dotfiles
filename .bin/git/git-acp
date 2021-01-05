@@ -55,6 +55,12 @@ elif [[ -z "${origin_remote:-}" ]]; then
   echo 'Unable to determine origin remote.'; exit 1;
 fi;
 
+# Is the repo already clean?
+
+if ! git-repo-is-dirty; then
+  echo 'Nothing to commit, working tree clean.';
+fi;
+
 # Do git add, commit, push.
 # Possibly push to other remotes.
 
@@ -75,7 +81,7 @@ fi;
 if [[ -n "${other_branches}" ]]; then IFS=',' read -ra _other_branches <<< "${other_branches}";
   for _other_branch in "${_other_branches[@]}"; do
     if [[ "${_other_branch}" != "${start_branch}" ]] && git-branch-exists "${_other_branch}"; then
-      git checkout "${_other_branch}" && git merge "${start_branch}" && git push "${_other_remote}" "${_other_branch}";
+      git checkout "${_other_branch}" && git merge "${start_branch}" && git push "${origin_remote}" "${_other_branch}";
 		  git checkout "${start_branch}";
 
       if [[ -n "${other_remotes}" ]]; then IFS=',' read -ra _other_remotes <<< "${other_remotes}";
