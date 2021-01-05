@@ -10,7 +10,9 @@
 
 # Collect arguments.
 
-message=''; other_branches='';
+message='';
+other_branches='';
+other_remotes='';
 
 while [[ $# -gt 0 ]]; do
   case "${1}" in
@@ -26,30 +28,63 @@ while [[ $# -gt 0 ]]; do
       other_branches="${1#*=}";
       shift;
       ;;
+    --other-remote=*|--other-remotes=*)
+      other_remotes="${1#*=}";
+      shift;
+      ;;
     *)
       echo 'Invalid arguments.'; exit 1;
   esac;
 done;
 
-# Validate arguments.
+# Initialize variables.
+
+start_branch="$(git-current-branch)";
+origin_remote='origin';
+
+other_branches="${other_branches// /}";
+other_remotes="${other_remotes// /}";
+
+# Validate arguments/variables.
 
 if [[ -z "${message:-}" ]]; then
   echo 'One of -m or --message is required.'; exit 1;
+elif [[ -z "${start_branch:-}" ]]; then
+  echo 'Unable to determine starting branch name.'; exit 1;
+elif [[ -z "${origin_remote:-}" ]]; then
+  echo 'Unable to determine origin remote.'; exit 1;
 fi;
 
-other_branches="${other_branches// /}";
-start_branch="$(git-current-branch)";
+# Do git add, commit, push.
+# Possibly push to other remotes.
 
-# Run commands.
+git add --all && git commit --message="${message}";
+git push --set-upstream "${origin_remote}" "${start_branch}";
 
-git add --all && git commit --message="${message}" && git push;
+if [[ -n "${other_remotes}" ]]; then IFS=',' read -ra _other_remotes <<< "${other_remotes}";
+  for _other_remote in "${_other_remotes[@]}"; do
+    if [[ "${_other_remote}" != "${origin_remote}" ]]; then
+      git push "${_other_remote}" "${start_branch}";
+    fi;
+  done;
+fi;
 
-if [[ -n "${other_branches}" ]]; then
-  IFS=',' read -r -a _other_branches <<< "${other_branches}";
+# Possibly merge and push other branches.
+# Possibly push those other branches to other remotes.
+
+if [[ -n "${other_branches}" ]]; then IFS=',' read -ra _other_branches <<< "${other_branches}";
   for _other_branch in "${_other_branches[@]}"; do
     if [[ "${_other_branch}" != "${start_branch}" ]] && git-branch-exists "${_other_branch}"; then
-      git checkout "${_other_branch}" && git merge "${start_branch}" && git push;
+      git checkout "${_other_branch}" && git merge "${start_branch}" && git push "${_other_remote}" "${_other_branch}";
 		  git checkout "${start_branch}";
+
+      if [[ -n "${other_remotes}" ]]; then IFS=',' read -ra _other_remotes <<< "${other_remotes}";
+        for _other_remote in "${_other_remotes[@]}"; do
+          if [[ "${_other_remote}" != "${origin_remote}" ]]; then
+            git push "${_other_remote}" "${_other_branch}";
+          fi;
+        done;
+      fi;
     fi;
   done;
 fi;
