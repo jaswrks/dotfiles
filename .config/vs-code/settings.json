@@ -516,7 +516,7 @@
 
 	"dartsass.disableSourceMap": true,
 	"dartsass.disableAutoPrefixer": false,
-	"dartsass.disableCompileOnSave": false,
+	"dartsass.disableCompileOnSave": true,
 	"dartsass.enableStartWithUnderscores": false,
 	"dartsass.disableMinifiedFileGeneration": false,
 	"dartsass.sassBinPath": "/usr/local/bin/sass",
