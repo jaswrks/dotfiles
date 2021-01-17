@@ -488,13 +488,6 @@
 	"files.trimTrailingWhitespace": true,
 	"files.trimFinalNewlines": true,
 
-	"scss.validate": false,
-	"less.validate": false,
-	"css.validate": false,
-
-	"stylelint.enable": true,
-	"stylelint.validate": ["scss", "less", "css"],
-
 	"search.exclude": {
 		"**/vendor": true,
 		"**/node_modules": true,
@@ -513,13 +506,17 @@
 	"git.promptToSaveFilesBeforeCommit": "always",
 	"git.path": "/usr/local/bin/git",
 
+	"scss.validate": false,
+	"less.validate": false,
+	"css.validate": false,
+
+	"stylelint.enable": true,
+	"stylelint.validate": ["scss", "less", "css"],
+
 	"eslint.run": "onSave",
 	"eslint.format.enable": true,
 	"eslint.lintTask.enable": true,
 	"eslint.nodePath": "/usr/local/lib/node_modules",
-	"eslint.options": {
-		"configFile": "/users/jaswrks/.eslintrc.json"
-	},
 
 	"dartsass.disableSourceMap": true,
 	"dartsass.disableAutoPrefixer": false,
@@ -531,8 +528,6 @@
 
 	"prettier.requireConfig": true,
 	"prettier.prettierPath": "/usr/local/lib/node_modules/prettier",
-	"prettier.configPath": "/users/jaswrks/.prettierrc.json",
-	"prettier.ignorePath": ".prettierignore",
 
 	"php.suggest.basic": true,
 	"php.validate.enable": true,
