@@ -38,7 +38,7 @@
 			"textMateRules": [
 				{
 					"name": "Comments",
-					"scope": [ "comment.block", "comment.line" ],
+					"scope": ["comment.block", "comment.line"],
 					"settings": {
 						"fontStyle": "",
 						"foreground": "#747474"
@@ -46,7 +46,7 @@
 				},
 				{
 					"name": "docBlock Comments",
-					"scope": [ "comment.block.documentation" ],
+					"scope": ["comment.block.documentation"],
 					"settings": {
 						"fontStyle": "",
 						"foreground": "#7e7e7e"
@@ -54,7 +54,7 @@
 				},
 				{
 					"name": "Operator Mono Italics",
-					"scope": [ "storage.type.php", "keyword.other.new.php", "variable.language.this.php", "keyword.control.exception.catch.php", "keyword.operator.return-value.php", "punctuation.definition.storage-type.begin.bracket.round.php", "punctuation.definition.storage-type.end.bracket.round.php" ],
+					"scope": ["storage.type.php", "keyword.other.new.php", "variable.language.this.php", "keyword.control.exception.catch.php", "keyword.operator.return-value.php", "punctuation.definition.storage-type.begin.bracket.round.php", "punctuation.definition.storage-type.end.bracket.round.php"],
 					"settings": {
 						"fontStyle": "italic"
 					}
@@ -424,7 +424,7 @@
 		"editor.detectIndentation": true,
 		"editor.autoIndent": "full",
 
-		"editor.rulers": [ 72 ],
+		"editor.rulers": [72],
 		"editor.wordWrap": "off",
 
 		"editor.quickSuggestions": {
@@ -440,7 +440,7 @@
 		"editor.detectIndentation": true,
 		"editor.autoIndent": "full",
 
-		"editor.rulers": [ 72 ],
+		"editor.rulers": [72],
 		"editor.wordWrap": "off",
 
 		"editor.quickSuggestions": {
@@ -488,6 +488,11 @@
 	"files.trimTrailingWhitespace": true,
 	"files.trimFinalNewlines": true,
 
+	"stylelint.enable": true,
+	"css.validate": false,
+	"less.validate": false,
+	"scss.validate": false,
+
 	"search.exclude": {
 		"**/vendor": true,
 		"**/node_modules": true,
@@ -520,7 +525,7 @@
 	"dartsass.enableStartWithUnderscores": false,
 	"dartsass.disableMinifiedFileGeneration": false,
 	"dartsass.sassBinPath": "/usr/local/bin/sass",
-	"dartsass.autoPrefixBrowsersList": [ ">= 0.2%", "not ie <= 11", "not op_mini all", "not dead" ],
+	"dartsass.autoPrefixBrowsersList": [">= 0.2%", "not ie <= 11", "not op_mini all", "not dead"],
 
 	"prettier.requireConfig": true,
 	"prettier.prettierPath": "/usr/local/lib/node_modules/prettier",
@@ -545,7 +550,7 @@
 
 	"shellcheck.enable": true,
 	"shellcheck.run": "onSave",
-	"shellcheck.exclude": [ "1090", "2155", "2114", "1091", "2129" ],
+	"shellcheck.exclude": ["1090", "2155", "2114", "1091", "2129"],
 	"shellcheck.executablePath": "/usr/local/bin/shellcheck",
 
 	"terminal.integrated.fontSize": 15,
