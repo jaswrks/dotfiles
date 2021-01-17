@@ -488,10 +488,12 @@
 	"files.trimTrailingWhitespace": true,
 	"files.trimFinalNewlines": true,
 
-	"stylelint.enable": true,
-	"css.validate": false,
-	"less.validate": false,
 	"scss.validate": false,
+	"less.validate": false,
+	"css.validate": false,
+
+	"stylelint.enable": true,
+	"stylelint.validate": ["scss", "less", "css"],
 
 	"search.exclude": {
 		"**/vendor": true,
