@@ -135,6 +135,7 @@ class Sandbox_CLI_Tool extends CLI_Tool {
 		foreach ( [
 			'ar',
 			'br',
+			'pt-br',
 			'de',
 			'el',
 			'en',
